@@ -1,18 +1,16 @@
 v0.3.1 (Sunday, 19 December 2010):
-  - fanart included;
-  - now hosted on this svn repository, for easy updates;
-  - renamed Default.py to default.py to avoid issues with XBMC Live;
+  - fanart included
+  - now hosted on this svn repository, for easy updates
+  - renamed Default.py to default.py to avoid issues with XBMC Live
 
 v0.3 (Thursday, 16 December 2010):
-  - added settings panel and options to flatten certain menus;
-  - added pictures for main categories;
+  - added settings panel and options to flatten certain menus
+  - added pictures for main categories
 
 v0.2 (December 2010):
-  - lots and lots of improvements;
-  - mirrors now sorted by type, source and part;
-  - added categories Popular, Latest Releases etc.;
-  - whether a film is HD or not is now visible;
+  - mirrors now sorted by type, source and part
+  - added categories Popular, Latest Releases etc.
+  - whether a film is HD or not is now visible
 
- 
 v0.1 (November 2010) :
-  - initial release;
+  - initial release
