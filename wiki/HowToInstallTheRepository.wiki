@@ -3,6 +3,7 @@ I can push out updates easily, with the user being notified in XBMC when there a
 
 = How to install the repository =
 Download the repository.googlecode.anarchintosh-projects.zip
+
 Open XBMC
 Go to Settings > Addons > Install from zip file
 Browse to your downloads and select it
