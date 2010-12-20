@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
-    <string id="30100">Disable A-Z directories in Movies/TV Shows [Slow]</string>
-    <string id="30101">Flatten Source Type [ie. if source has only DVDRip]</string>
-    <string id="30102">Flatten MegaUpload Links [Slow]</string>
+    <string id="30100">Hide Homepage</string>
+    <string id="30101">Flatten Source Type - for single type videos</string>
+    <string id="30102">Flatten MegaUpload Links - Slow]</string>
 </strings>

@@ -1,7 +1,12 @@
+v0.4.0 (Monday,20 December 2010):
+  - added search function
+  - added Homepage category (and option to disable)
+  - removed flatten A-Z directories (avoid overloading icefilms)
+
 v0.3.1 (Sunday, 19 December 2010):
   - fanart included
   - now hosted on this svn repository, for easy updates
-  - renamed Default.py to default.py to avoid issues with XBMC Live
+  - renamed Default.py to default.py to avoid XBMC Live issues
 
 v0.3 (Thursday, 17 December 2010):
   - added settings panel and options to flatten certain menus

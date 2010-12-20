@@ -1,18 +1,21 @@
 #!/usr/bin/python
 
-import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,StringIO
+import urllib,urllib2,re,xbmc,xbmcplugin,xbmcgui,xbmcaddon,StringIO
 
-#Icefilms.info v0.3 - anarchintosh 8/12/2010
+#Icefilms.info v0.4 - anarchintosh 20/12/2010
 
 #get settings
 selfAddon = xbmcaddon.Addon(id='plugin.video.icefilms')
 FlattenSrcType = selfAddon.getSetting('flatten-source-type')
 FlattenMega = selfAddon.getSetting('flatten-megaupload')
-DisableAtoZ = selfAddon.getSetting('AtoZ-list')
-
+HideHomepage = selfAddon.getSetting('hide-homepage')
 #access settings by using example boolean below:
-#if DisableAtoZ == 'true':
-#        print 'lol'
+#if HideHomepage == 'true':
+#        (execute some code)
+
+#hardcode DisableAtoZ to false to avoid overloading iceservers
+DisableAtoZ = 'false'
+
 
         
 #useful global strings:
@@ -20,12 +23,118 @@ iceurl = 'http://www.icefilms.info/'
 
 
 def CATEGORIES():
+        if HideHomepage == 'false':
+                addDir('Homepage',iceurl+'index',56,'http://img.icefilms.info/blueflame.png')
         addDir('TV Shows',iceurl+'tv/a-z/1',50,'http://i1224.photobucket.com/albums/ee364/froggermonster1/tvshows.png')
         addDir('Movies',iceurl+'movies/a-z/1',51,'http://i1224.photobucket.com/albums/ee364/froggermonster1/movies.png')
         addDir('Music',iceurl+'music/a-z/1',52,'http://i1224.photobucket.com/albums/ee364/froggermonster1/music.png')
         addDir('Stand Up Comedy',iceurl+'standup/a-z/1',53,'http://i1224.photobucket.com/albums/ee364/froggermonster1/standup.png')
         addDir('Other',iceurl+'other/a-z/1',54,'http://i1224.photobucket.com/albums/ee364/froggermonster1/other.png')
+        addDir('Search',iceurl,55,'http://i1224.photobucket.com/albums/ee364/froggermonster1/search.png')
 
+def ICEHOMEPAGE(url):
+        addDir('Recently Added',iceurl+'index',60,'')
+        addDir('Latest Releases',iceurl+'index',61,'')
+        addDir('Being Watched Now',iceurl+'index',62,'')
+
+def RECENT(url):
+        link=GetURL(url)
+        homepage=re.compile('<h1>Recently Added</h1>(.+?)<h1>Statistics</h1>').findall(link)
+        for scrape in homepage:
+                scrape='<h1>Recently Added</h1>'+scrape+'<h1>Statistics</h1>'
+                recadd=re.compile('<h1>Recently Added</h1>(.+?)<h1>Latest Releases</h1>').findall(scrape)
+                for scraped in recadd:
+                        mirlinks=re.compile('<a href=(.+?)>(.+?)</a>').findall(scraped)
+                        for url,name in mirlinks:
+                                url='http://www.icefilms.info'+url
+                                name=CLEANUP(name)
+                                addDir(name,url,100,'')
+    
+def LATEST(url):
+        link=GetURL(url)
+        homepage=re.compile('<h1>Recently Added</h1>(.+?)<h1>Statistics</h1>').findall(link)
+        for scrape in homepage:
+                scrape='<h1>Recently Added</h1>'+scrape+'<h1>Statistics</h1>'
+                latrel=re.compile('<h1>Latest Releases</h1>(.+?)<h1>Being Watched Now</h1>').findall(scrape)
+                for scraped in latrel:
+                        mirlinks=re.compile('<a href=(.+?)>(.+?)</a>').findall(scraped)
+                        for url,name in mirlinks:
+                                url='http://www.icefilms.info'+url
+                                name=CLEANUP(name)
+                                addDir(name,url,100,'')
+def WATCHINGNOW(url):
+        link=GetURL(url)
+        homepage=re.compile('<h1>Recently Added</h1>(.+?)<h1>Statistics</h1>').findall(link)
+        for scrape in homepage:
+                scrapy='<h1>Recently Added</h1>'+scrape+'<h1>Statistics</h1>'
+                watnow=re.compile('<h1>Being Watched Now</h1>(.+?)<h1>Statistics</h1>').findall(scrapy)
+                for scraped in watnow:
+                        mirlinks=re.compile('href=(.+?)>(.+?)</a>').findall(scraped)
+                        for url,name in mirlinks:
+                                url='http://www.icefilms.info'+url
+                                name=CLEANUP(name)
+                                addDir(name,url,100,'')        
+
+def SEARCH(url):
+        kb = xbmc.Keyboard('', 'Search Icefilms.info', False)
+        kb.doModal()
+        if (kb.isConfirmed()):
+                search = kb.getText()
+                search=re.sub(' ','+',search)
+                nurl='http://www.google.co.uk/search?q='+search+'+site%3Ahttp%3A%2F%2Fwww.icefilms.info&hl=en&num=10&lr=&ft=i&cr=&safe=images&tbs='
+                link=GetURL(nurl)
+                match=re.compile('<h3 class="r"><a href="http://www.icefilms.info/(.+?)".+?">(.+?)</h3><button class=vspib>').findall(link)
+                EPLIST(match[0])
+                EPLIST(match[1])
+                EPLIST(match[2])
+                EPLIST(match[3])
+                EPLIST(match[4])
+                EPLIST(match[5])
+                EPLIST(match[6])
+                EPLIST(match[7])
+                EPLIST(match[8])
+                EPLIST(match[9])
+                
+def EPLIST(setmatch):
+        outputone = StringIO.StringIO()
+        outputone.write(setmatch)
+        setmatch = outputone.getvalue()
+        checkforep=re.search('Episode List',setmatch)
+        if checkforep is not None:
+            split=re.compile("'(.+?)', '(.+?)'").findall(setmatch)
+            for url,name in split:
+                url=re.sub('&amp;','',url)
+                surl=iceurl+url
+                name=CLEANSEARCH(name)
+                addDir(name,surl,12,'')
+        checkforep2=re.search('Episode  List',setmatch)
+        if checkforep2 is not None:
+            split=re.compile("'(.+?)', '(.+?)'").findall(setmatch)
+            for url,name in split:
+                url=re.sub('&amp;','',url)
+                surl=iceurl+url
+                name=CLEANSEARCH(name)
+                addDir(name,surl,12,'')
+        if checkforep is None and checkforep2 is None:
+            split=re.compile("'(.+?)', '(.+?)'").findall(setmatch)
+            for url,name in split:
+                url=re.sub('&amp;','',url)
+                surl=iceurl+url
+                name=CLEANSEARCH(name)
+                addDir(name,surl,100,'')
+
+def CLEANSEARCH(name):        
+        name=re.sub('<em>','',name)
+        name=re.sub('</em>','',name)
+        name=re.sub('DivX - icefilms.info','',name)
+        name=re.sub('</a>','',name)
+        name=re.sub('<b>...</b>','',name)
+        name=re.sub('- icefilms.info','',name)
+        name=re.sub('DivX','',name)
+        name=re.sub('&#39;',"'",name)
+        name=re.sub('&amp;','&',name)
+        name=re.sub('-  Episode  List','- Episode List',name)
+        return name
 
 def TVCATEGORIES(url):
         caturl = iceurl+'tv/'        
@@ -215,15 +324,11 @@ def CLEANUP(name):
                 name=re.sub('<b>HD</b>',' *HD 720p*',name)
                 name=re.sub('&#xF4;','o',name)
                 name=re.sub('&#xE9;',"e",name)
-#                name=re.sub('&#x27;',"'",name)
+                name=re.sub('&#xEB;',"e",name)
                 return name
 
 def MOVIEINDEX(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link=GetURL(url)
 # below is the original scraper that ignores HD tags.
 #        match=re.compile('<img class=star><a href=/(.+?)>(.+?)</a>').findall(link)
         match=re.compile('<img class=star><a href=/(.+?)>(.+?)<br>').findall(link)
@@ -232,39 +337,24 @@ def MOVIEINDEX(url):
                 addDir(name,iceurl+url,100,'')
 
 def TVINDEX(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link=GetURL(url)
         match=re.compile('<img class=star><a href=/(.+?)>(.+?)</a>').findall(link)
         for url,name in match:
                 name=CLEANUP(name)
                 addDir(name,iceurl+url,12,'')
 
-
-
 def TVEPISODES(url):
 # displays all episodes, with no unnecessary sub-directories for seasons. (this means it works even for 'the daily show with jon stewart' etc...)
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link=GetURL(url)
         match=re.compile('<img class=star><a href=/(.+?)>(.+?)</a>').findall(link)
         for url,name in match:
                 name=CLEANUP(name)
                 addDir(name,iceurl+url,100,'')
-
                 
 def LOADMIRRORS(url):
 # This proceeds from the file page to the separate frame where the mirrors can be found,
 # then executes code to scrape the mirrors
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link=GetURL(url)
         match=re.compile('/membersonly/components/com_iceplayer/(.+?)" width=').findall(link)
         match[0]=re.sub('%29',')',match[0])
         match[0]=re.sub('%28','(',match[0])
@@ -272,24 +362,18 @@ def LOADMIRRORS(url):
             mirrorpageurl = iceurl+'membersonly/components/com_iceplayer/'+url
         GETMIRRORS(mirrorpageurl)
 
-
-
 def GETMIRRORS(url):
 # This scrapes the megaupload mirrors from the separate url used for the video frame.
 # It also displays them in an informative fashion to user.
 # Displays in three directory levels: HD or DVDRip, Source, PART
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link=GetURL(url)
 #old scrape all mega links code
 #        mulink=re.compile('http://www.megaupload.com/(.+?)>').findall(link)
 #        for url in mulink:
 #                fullmulink = 'http://www.megaupload.com/'+url
 #                addDir(fullmulink,fullmulink,110,'')
 
-#strings for checking the existence of categories
+        #strings for checking the existence of categories
         dvdrip=re.compile('<div class=ripdiv><b>DVDRip / (.+?)</b>').findall(link)
         hd720p=re.compile('<div class=ripdiv><b>HD (.+?)</b>').findall(link)
         dvdscreener=re.compile('<div class=ripdiv><b>DVD Sc(.+?)</b>').findall(link)
@@ -311,9 +395,6 @@ def GETMIRRORS(url):
         outputone.write(r5r6)
         r5r6 = outputone.getvalue()
 
-        #set values to false by default
-
-        
         #check that these categories exist, if they do set values to true.
         if len(dvdrip) >3:
                 dvdrip = 'true'
@@ -412,7 +493,6 @@ def PART(scrap,sourcenumber):
                                         VIDEOLINKS(fullname,url)
                                 if FlattenMega == 'false':
                                         addDir(fullname,url,110,'')
-
                 
 def SOURCE(scrape):
 #check for sources containing multiple parts or just one part
@@ -432,14 +512,9 @@ def SOURCE(scrape):
         PART(scrape,'14')
         PART(scrape,'15')
         PART(scrape,'16')
-
                 
 def DVDRip(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link=GetURL(url)
 #string for all text under standard def border
         defcat=re.compile('<div class=ripdiv><b>DVDRip / Standard Def</b>(.+?)</div>').findall(link)
         #hacky buffer
@@ -449,11 +524,7 @@ def DVDRip(url):
         SOURCE(defcat)
 
 def HD720p(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link=GetURL(url)
 #string for all text under hd720p border
         defcat=re.compile('<div class=ripdiv><b>HD 720p</b>(.+?)</div>').findall(link)
         #hacky buffer
@@ -462,13 +533,8 @@ def HD720p(url):
         defcat = outputone.getvalue()
         SOURCE(defcat)
 
-
 def DVDScreener(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link=GetURL(url)
 #string for all text under dvd screener border
         defcat=re.compile('<div class=ripdiv><b>DVD Screener</b>(.+?)<p></div>').findall(link)
         #hacky buffer
@@ -479,11 +545,7 @@ def DVDScreener(url):
         SOURCE(catdef)
 
 def R5R6(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link=GetURL(url)
 #string for all text under r5/r6 border
         defcat=re.compile('<div class=ripdiv><b>R5/R6 DVDRip</b>(.+?)<p></div>').findall(link)
         #hacky buffer
@@ -495,11 +557,7 @@ def R5R6(url):
 
 def VIDEOLINKS(partname,url):
 # loads megaupload page and scrapes and adds videolink, passes through partname.
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link=GetURL(url)
         avimatch=re.compile('id="downloadlink"><a href="(.+?).avi" class=').findall(link)
         for url in avimatch:
                 fullurl=url+'.avi'                          
@@ -512,11 +570,7 @@ def VIDEOLINKS(partname,url):
 
 def VIDEOLINKSWITHFILENAME(url):
 # loads megaupload page and scrapes and adds videolink, and name of uploaded file from it
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link=GetURL(url)
         avimatch=re.compile('id="downloadlink"><a href="(.+?).avi" class=').findall(link)
         for url in avimatch:
                 fullurl=url+'.avi'                          
@@ -533,6 +587,13 @@ def VIDEOLINKSWITHFILENAME(url):
                 for urlfilename in matchy:
                         addLink('VideoFile | '+urlfilename,sullurl,'')
         
+def GetURL(url):
+        req = urllib2.Request(url)
+        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
+        response = urllib2.urlopen(req)
+        link=response.read()
+        response.close()
+        return link
 
 def get_params():
         param=[]
@@ -613,6 +674,26 @@ elif mode==53:
 elif mode==54:
         print ""+url
         OTHERCATEGORIES(url)
+
+elif mode==55:
+        print ""+url
+        SEARCH(url)
+
+elif mode==56:
+        print ""+url
+        ICEHOMEPAGE(url)
+
+elif mode==60:
+        print ""+url
+        RECENT(url)
+
+elif mode==61:
+        print ""+url
+        LATEST(url)
+
+elif mode==62:
+        print ""+url
+        WATCHINGNOW(url)
 
 elif mode==1:
         print ""+url

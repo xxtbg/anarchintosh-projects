@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-  <setting id="AtoZ-list" type="bool" label="30100" default="false"/>
+  <setting id="hide-homepage" type="bool" label="30100" default="false"/>
   <setting id="flatten-source-type" type="bool" label="30101" default="true"/>
   <setting id="flatten-megaupload" type="bool" label="30102" default="false"/>
 </settings>
