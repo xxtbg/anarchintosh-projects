@@ -1,4 +1,4 @@
-v0.5.0 (Thursday,21 December 2010):
+v0.5.0 (Thursday,23 December 2010):
   - search function won't return error if it cant find search
   - support for megaupload free (tested) and premium (untested)
   - notifications for logins
