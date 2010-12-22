@@ -1,3 +1,10 @@
+v0.5.0 (Thursday,21 December 2010):
+  - search function won't return error if it cant find search
+  - support for megaupload free (tested) and premium (untested)
+  - notifications for logins
+  - art is now loaded from disk, not scraped from photobucket
+  - cookies, cookies, cookies
+
 v0.4.0 (Monday,20 December 2010):
   - added search function
   - added Homepage category (and option to disable)

@@ -1,36 +1,147 @@
 #!/usr/bin/python
 
-import urllib,urllib2,re,xbmc,xbmcplugin,xbmcgui,xbmcaddon,StringIO
+#Icefilms.info v0.5 - anarchintosh 20/12/2010
+# very convoluted code.
+import sys,os
+import urllib,urllib2,re,mechanize,cookielib,html2text
+import xbmc,xbmcplugin,xbmcgui,xbmcaddon,StringIO
+from BeautifulSoup import BeautifulSoup
 
-#Icefilms.info v0.4 - anarchintosh 20/12/2010
+def xbmcpath(path,filename):
+     translatedpath = os.path.join(xbmc.translatePath( path ), ''+filename+'')
+     return translatedpath
+
+       
+def Notify(type,title,message,time):
+     if type == 'small':
+          xbmc.executebuiltin("XBMC.Notification("+title+","+message+","+time+",aas)")
+     if type == 'big':
+          dialog = xbmcgui.Dialog()
+          dialog.ok(' '+title+' ', ' '+message+' ')
+
+icepath = 'plugin://plugin.video.icefilms/'
+icedatapath = 'special://profile/addon_data/plugin.video.icefilms'
+art = icepath+'resources/art/'
+megacookie = xbmcpath(icedatapath,'cookies.lwp')
+loginfile = xbmcpath(icedatapath,'login')
+premiumfile = xbmcpath(icedatapath,'premium')
+
+homepagey = xbmcpath(art,'homepage.png')
+moviesy = xbmcpath(art,'movies.png')
+musicy = xbmcpath(art,'music.png')
+tvshowsy = xbmcpath(art,'tvshows.png')
+othery = xbmcpath(art,'other.png')
+searchy = xbmcpath(art,'search.png')
+standupy = xbmcpath(art,'standup.png')
+
+
+
 
 #get settings
 selfAddon = xbmcaddon.Addon(id='plugin.video.icefilms')
 FlattenSrcType = selfAddon.getSetting('flatten-source-type')
 FlattenMega = selfAddon.getSetting('flatten-megaupload')
 HideHomepage = selfAddon.getSetting('hide-homepage')
-#access settings by using example boolean below:
-#if HideHomepage == 'true':
-#        (execute some code)
+AccountType = selfAddon.getSetting('account')
+if AccountType == '2':
+        megauser = selfAddon.getSetting('freeuser')
+        megapass = selfAddon.getSetting('freepass')
+        HideSuccessfulLogin = selfAddon.getSetting('hide-successful-free-login-messages')
+
+if AccountType == '1':
+        megauser = selfAddon.getSetting('premiumuser')
+        megapass = selfAddon.getSetting('premiumpass')
+        HideSuccessfulLogin = selfAddon.getSetting('hide-successful-premium-login-messages')
 
 #hardcode DisableAtoZ to false to avoid overloading iceservers
 DisableAtoZ = 'false'
 
-
-        
 #useful global strings:
 iceurl = 'http://www.icefilms.info/'
 
 
+
+def openfile(filename):
+     fh = open(filename, 'r')
+     contents=fh.read()
+     fh.close()
+     return contents
+
+def save(filename, contents):  
+     fh = open(filename, 'w')
+     fh.write(contents)  
+     fh.close()
+     
+#check for megaupload login and do it
+def DoLogin():
+        if AccountType == '0':
+                login = 'none'
+                save(loginfile,login)
+        if AccountType == '1' or AccountType == '2':
+                # Browser
+                br = mechanize.Browser()
+
+                # Cookie Jar
+                cj = cookielib.LWPCookieJar()
+                br.set_cookiejar(cj)
+
+                # Browser options
+                br.set_handle_equiv(True)
+                br.set_handle_gzip(True)
+                br.set_handle_redirect(True)
+                br.set_handle_referer(True)
+                br.set_handle_robots(False)
+
+                # Follows refresh 0 but not hangs on refresh > 0
+                br.set_handle_refresh(mechanize._http.HTTPRefreshProcessor(), max_time=1)
+
+                # User-Agent
+                br.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
+
+                # The site we will navigate into, handling it's session
+                br.open('http://www.megaupload.com/?c=login')
+
+                # Select the first (index zero) form
+                br.select_form('loginfrm')
+
+                #User credentials
+                br.form['username'] = megauser
+                br.form['password'] = megapass
+                br.submit()
+                #checks if login worked
+                loginerror="Username and password do not match" in br.response().read()
+                cj.save(megacookie)
+                if loginerror == True:
+                        login = 'none'
+                        save(loginfile,login)
+                        print 'login failed'
+                        Notify('big','Megaupload','Login failed. Megaupload will load with no account.','')
+                elif loginerror == False:
+                        print 'login succeeded'
+                        if AccountType == '2':
+                                login = 'free'
+                                save(loginfile,login)
+                                if HideSuccessfulLogin == 'false':
+                                        Notify('small','Megaupload', 'Free-user login successful.','6000')
+                        elif AccountType == '1':
+                                login = 'premium'
+                                save(loginfile,login)
+                                if HideSuccessfulLogin == 'false':
+                                        Notify('small','Megaupload', 'Premium login successful.','6000')
+                                
+                                
+
+
 def CATEGORIES():
+        DoLogin()
         if HideHomepage == 'false':
-                addDir('Homepage',iceurl+'index',56,'http://img.icefilms.info/blueflame.png')
-        addDir('TV Shows',iceurl+'tv/a-z/1',50,'http://i1224.photobucket.com/albums/ee364/froggermonster1/tvshows.png')
-        addDir('Movies',iceurl+'movies/a-z/1',51,'http://i1224.photobucket.com/albums/ee364/froggermonster1/movies.png')
-        addDir('Music',iceurl+'music/a-z/1',52,'http://i1224.photobucket.com/albums/ee364/froggermonster1/music.png')
-        addDir('Stand Up Comedy',iceurl+'standup/a-z/1',53,'http://i1224.photobucket.com/albums/ee364/froggermonster1/standup.png')
-        addDir('Other',iceurl+'other/a-z/1',54,'http://i1224.photobucket.com/albums/ee364/froggermonster1/other.png')
-        addDir('Search',iceurl,55,'http://i1224.photobucket.com/albums/ee364/froggermonster1/search.png')
+                addDir('Homepage',iceurl+'index',56,homepagey)
+        addDir('TV Shows',iceurl+'tv/a-z/1',50,tvshowsy)
+        addDir('Movies',iceurl+'movies/a-z/1',51,moviesy)
+        addDir('Music',iceurl+'music/a-z/1',52,musicy)
+        addDir('Stand Up Comedy',iceurl+'standup/a-z/1',53,standupy)
+        addDir('Other',iceurl+'other/a-z/1',54,othery)
+        addDir('Search',iceurl,55,searchy)
 
 def ICEHOMEPAGE(url):
         addDir('Recently Added',iceurl+'index',60,'')
@@ -62,6 +173,7 @@ def LATEST(url):
                                 url='http://www.icefilms.info'+url
                                 name=CLEANUP(name)
                                 addDir(name,url,100,'')
+
 def WATCHINGNOW(url):
         link=GetURL(url)
         homepage=re.compile('<h1>Recently Added</h1>(.+?)<h1>Statistics</h1>').findall(link)
@@ -84,16 +196,20 @@ def SEARCH(url):
                 nurl='http://www.google.co.uk/search?q='+search+'+site%3Ahttp%3A%2F%2Fwww.icefilms.info&hl=en&num=10&lr=&ft=i&cr=&safe=images&tbs='
                 link=GetURL(nurl)
                 match=re.compile('<h3 class="r"><a href="http://www.icefilms.info/(.+?)".+?">(.+?)</h3><button class=vspib>').findall(link)
-                EPLIST(match[0])
-                EPLIST(match[1])
-                EPLIST(match[2])
-                EPLIST(match[3])
-                EPLIST(match[4])
-                EPLIST(match[5])
-                EPLIST(match[6])
-                EPLIST(match[7])
-                EPLIST(match[8])
-                EPLIST(match[9])
+                outputone = StringIO.StringIO()
+                outputone.write(match)
+                result = outputone.getvalue()
+                if len(result) >3 and search is not '':
+                        EPLIST(match[0])
+                        EPLIST(match[1])
+                        EPLIST(match[2])
+                        EPLIST(match[3])
+                        EPLIST(match[4])
+                        EPLIST(match[5])
+                        EPLIST(match[6])
+                        EPLIST(match[7])
+                        EPLIST(match[8])
+                        EPLIST(match[9])
                 
 def EPLIST(setmatch):
         outputone = StringIO.StringIO()
@@ -378,6 +494,7 @@ def GETMIRRORS(url):
         hd720p=re.compile('<div class=ripdiv><b>HD (.+?)</b>').findall(link)
         dvdscreener=re.compile('<div class=ripdiv><b>DVD Sc(.+?)</b>').findall(link)
         r5r6=re.compile('<div class=ripdiv><b>R5/(.+?) DVDRip</b>').findall(link)
+
         #hacky buffers
         outputone = StringIO.StringIO()
         outputone.write(dvdrip)
@@ -412,8 +529,8 @@ def GETMIRRORS(url):
         if len(dvdscreener) <1:
                 dvdscreener = 'false'
         if len(r5r6) <1:
-                r5r6 = 'false'
-     
+             r5r6 = 'false'
+             
         #only detect and proceed directly to adding sources if flatten sources setting is true
         if FlattenSrcType == 'true':
                 #check if there is more than one directory
@@ -448,6 +565,8 @@ def GETMIRRORS(url):
         #if flattensources is set to false, don't flatten                
         if FlattenSrcType == 'false':
                 addCatDir(url,dvdrip,hd720p,dvdscreener,r5r6)     
+
+
                 
 def addCatDir(url,dvdrip,hd720p,dvdscreener,r5r6):
         if dvdrip == 'true':
@@ -469,10 +588,7 @@ def PART(scrap,sourcenumber):
                         megaurl='http://www.megaupload.com/'+murl
                         partname='PART '+name
                         fullname='Source #'+sourcenumber+' | ['+partname+']'
-                        if FlattenMega == 'true':
-                                VIDEOLINKS(fullname,megaurl)
-                        if FlattenMega == 'false':
-                                addDir(fullname,megaurl,110,'')
+                        VIDLINK(fullname,megaurl)
         outputone = StringIO.StringIO()
         outputone.write(source)
         source10 = outputone.getvalue()
@@ -483,17 +599,15 @@ def PART(scrap,sourcenumber):
                 source3=re.compile('Source #'+sourcenumber+': ').findall(scrap)
                 outputone = StringIO.StringIO()
                 outputone.write(source3)
-                source3 = outputone.getvalue()
-                if len(source3) >0:
+                source11 = outputone.getvalue()
+                if len(source11) >0:
                         #find corresponding '<a rel=?' entry and add as a one-link source
                         source5=re.compile('<a rel='+sourcenumber+'.+?&url=(.+?)>Source #'+sourcenumber+':').findall(scrap)
                         for url in source5:
                                 fullname='Source #'+sourcenumber+' | [Full]'
-                                if FlattenMega == 'true':
-                                        VIDEOLINKS(fullname,url)
-                                if FlattenMega == 'false':
-                                        addDir(fullname,url,110,'')
-                
+                                VIDLINK(fullname,url)
+
+
 def SOURCE(scrape):
 #check for sources containing multiple parts or just one part
         PART(scrape,'1')
@@ -517,43 +631,31 @@ def DVDRip(url):
         link=GetURL(url)
 #string for all text under standard def border
         defcat=re.compile('<div class=ripdiv><b>DVDRip / Standard Def</b>(.+?)</div>').findall(link)
-        #hacky buffer
-        outputone = StringIO.StringIO()
-        outputone.write(defcat)
-        defcat = outputone.getvalue()
-        SOURCE(defcat)
+        for scrape in defcat:
+                SOURCE(scrape)
 
 def HD720p(url):
         link=GetURL(url)
 #string for all text under hd720p border
         defcat=re.compile('<div class=ripdiv><b>HD 720p</b>(.+?)</div>').findall(link)
-        #hacky buffer
-        outputone = StringIO.StringIO()
-        outputone.write(defcat)
-        defcat = outputone.getvalue()
-        SOURCE(defcat)
+        for scrape in defcat:
+                SOURCE(scrape)
 
 def DVDScreener(url):
         link=GetURL(url)
 #string for all text under dvd screener border
         defcat=re.compile('<div class=ripdiv><b>DVD Screener</b>(.+?)<p></div>').findall(link)
-        #hacky buffer
-        outputone = StringIO.StringIO()
-        outputone.write(defcat)
-        defcat = outputone.getvalue()
-        catdef = defcat+'<p></div>'
-        SOURCE(catdef)
+        for scrape in defcat:
+                catdef = scrape+'<p></div>'
+                SOURCE(catdef)
 
 def R5R6(url):
         link=GetURL(url)
 #string for all text under r5/r6 border
         defcat=re.compile('<div class=ripdiv><b>R5/R6 DVDRip</b>(.+?)<p></div>').findall(link)
-        #hacky buffer
-        outputone = StringIO.StringIO()
-        outputone.write(defcat)
-        defcat = outputone.getvalue()
-        catdef = defcat+'<p></div>'        
-        SOURCE(catdef)
+        for scrape in defcat:
+                catdef = scrape+'<p></div>'
+                SOURCE(catdef)
 
 def VIDEOLINKS(partname,url):
 # loads megaupload page and scrapes and adds videolink, passes through partname.
@@ -588,12 +690,40 @@ def VIDEOLINKSWITHFILENAME(url):
                         addLink('VideoFile | '+urlfilename,sullurl,'')
         
 def GetURL(url):
+        login=openfile(loginfile)
+        print 'login is'+login
         req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
-        return link
+        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')       
+        if login == 'free' or login == 'premium':
+                #load megaupload links with login cookie
+                ismega = re.search('.megaupload.com/', url)
+                if ismega is not 'None':
+                         cj = cookielib.LWPCookieJar()
+                         cooky=cj.load(megacookie)
+                         print cooky
+                         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cooky))
+                         response = opener.open(req)
+                         link=response.read()
+                         response.close()
+                         return link
+                if ismega is 'None':
+                        response = urllib2.urlopen(req)
+                        link=response.read()
+                        response.close()
+                        return link
+        if login == 'none':
+                response = urllib2.urlopen(req)
+                link=response.read()
+                response.close()
+                return link
+
+
+def VIDLINK(name,url):
+#video link preflight, pays attention to settings
+        if FlattenMega == 'true':
+                VIDEOLINKS(name,url)
+        if FlattenMega == 'false':
+                addDir(name,url,110,'')
 
 def get_params():
         param=[]
