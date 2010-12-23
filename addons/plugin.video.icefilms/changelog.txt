@@ -1,4 +1,5 @@
-v0.5.1 (Thursday,23 December 2010):
+v0.5.(1,2,3) (Thursday,23 December 2010):
+  - fixed error on first login with no account
   - fixed some bugs related to login notifications
   - tidied the login code
 

@@ -1,11 +1,13 @@
 #!/usr/bin/python
 
-#Icefilms.info v0.5.2 - anarchintosh 20/12/2010
+#Icefilms.info v0.5.3 - anarchintosh 20/12/2010
 # very convoluted code.
 import sys,os
 import urllib,urllib2,re,mechanize,cookielib,html2text
 import xbmc,xbmcplugin,xbmcgui,xbmcaddon,StringIO
 from BeautifulSoup import BeautifulSoup
+
+
 
 def xbmcpath(path,filename):
      translatedpath = os.path.join(xbmc.translatePath( path ), ''+filename+'')
@@ -21,10 +23,16 @@ def Notify(type,title,message,time):
 
 icepath = 'plugin://plugin.video.icefilms/'
 icedatapath = 'special://profile/addon_data/plugin.video.icefilms'
+translatedicedatapath = xbmcpath(icedatapath,'')
 art = icepath+'resources/art/'
 megacookie = xbmcpath(icedatapath,'cookies.lwp')
 print 'Cookie path: '+megacookie
-loginfile = xbmcpath(icedatapath,'login')
+loginfile = xbmcpath(icedatapath,'login.txt')
+
+
+# avoid error on first run if no icedatapath exists, by creating path
+if not os.path.exists(translatedicedatapath):
+    os.makedirs(translatedicedatapath)
 
 homepagey = xbmcpath(art,'homepage.png')
 moviesy = xbmcpath(art,'movies.png')
@@ -54,7 +62,7 @@ def openfile(filename):
      fh.close()
      return contents
 
-def savef(filename,contents):  
+def save(filename,contents):  
      fh = open(filename, 'w')
      fh.write(contents)  
      fh.close()
@@ -69,7 +77,8 @@ def DoLogin():
           
      if AccountType == '0':
           login = 'none'
-          savef(loginfile,login)
+          save(loginfile,login)
+          print 'loginfilesaved'
           try:
                os.remove(megacookie)
                print 'deleting megacookie'
@@ -121,26 +130,26 @@ def DoLogin():
                cj.save(megacookie)
                if loginerror == True:
                     login = 'none'
-                    savef(loginfile,login)
+                    save(loginfile,login)
                     print 'login failed'
                     Notify('big','Megaupload','Login failed. Megaupload will load with no account.','')
                elif loginerror == False:
                     print 'login succeeded'
                     if AccountType == '2':
                          login = 'free'
-                         savef(loginfile,login)
+                         save(loginfile,login)
                          if HideSuccessfulLogin == 'false':
                               Notify('small','Megaupload', 'Free-user login successful.','6000')
                     elif AccountType == '1':
                          login = 'premium'
-                         savef(loginfile,login)
+                         save(loginfile,login)
                          if HideSuccessfulLogin == 'false':
                               Notify('small','Megaupload', 'Premium login successful.','6000')
           if megapass is '' or megauser is '':
                print 'no login details specified, using no account'
                Notify('big','Megaupload','Login failed. Megaupload will load with no account.','')
                login = 'none'
-               savef(loginfile,login)
+               save(loginfile,login)
                                 
                                 
 
