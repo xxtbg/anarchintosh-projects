@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-#Icefilms.info v0.5 - anarchintosh 20/12/2010
+#Icefilms.info v0.5.1 - anarchintosh 20/12/2010
 # very convoluted code.
 import sys,os
 import urllib,urllib2,re,mechanize,cookielib,html2text
@@ -23,8 +23,8 @@ icepath = 'plugin://plugin.video.icefilms/'
 icedatapath = 'special://profile/addon_data/plugin.video.icefilms'
 art = icepath+'resources/art/'
 megacookie = xbmcpath(icedatapath,'cookies.lwp')
+print 'Cookie path: '+megacookie
 loginfile = xbmcpath(icedatapath,'login')
-premiumfile = xbmcpath(icedatapath,'premium')
 
 homepagey = xbmcpath(art,'homepage.png')
 moviesy = xbmcpath(art,'movies.png')
@@ -35,23 +35,12 @@ searchy = xbmcpath(art,'search.png')
 standupy = xbmcpath(art,'standup.png')
 
 
-
-
 #get settings
 selfAddon = xbmcaddon.Addon(id='plugin.video.icefilms')
 FlattenSrcType = selfAddon.getSetting('flatten-source-type')
 FlattenMega = selfAddon.getSetting('flatten-megaupload')
 HideHomepage = selfAddon.getSetting('hide-homepage')
 AccountType = selfAddon.getSetting('account')
-if AccountType == '2':
-        megauser = selfAddon.getSetting('freeuser')
-        megapass = selfAddon.getSetting('freepass')
-        HideSuccessfulLogin = selfAddon.getSetting('hide-successful-free-login-messages')
-
-if AccountType == '1':
-        megauser = selfAddon.getSetting('premiumuser')
-        megapass = selfAddon.getSetting('premiumpass')
-        HideSuccessfulLogin = selfAddon.getSetting('hide-successful-premium-login-messages')
 
 #hardcode DisableAtoZ to false to avoid overloading iceservers
 DisableAtoZ = 'false'
@@ -59,75 +48,89 @@ DisableAtoZ = 'false'
 #useful global strings:
 iceurl = 'http://www.icefilms.info/'
 
-
-
 def openfile(filename):
      fh = open(filename, 'r')
      contents=fh.read()
      fh.close()
      return contents
 
-def save(filename, contents):  
+def savef(filename,contents):  
      fh = open(filename, 'w')
      fh.write(contents)  
      fh.close()
      
 #check for megaupload login and do it
 def DoLogin():
-        if AccountType == '0':
-                login = 'none'
-                save(loginfile,login)
-        if AccountType == '1' or AccountType == '2':
-                # Browser
-                br = mechanize.Browser()
+     if AccountType == '0':
+          login = 'none'
+          savef(loginfile,login)
+          os.remove(megacookie)
+     elif AccountType == '1' or AccountType == '2':
+          if AccountType == '2':
+               megauser = selfAddon.getSetting('freeuser')
+               megapass = selfAddon.getSetting('freepass')
+               HideSuccessfulLogin = selfAddon.getSetting('hide-successful-free-login-messages')
+          elif AccountType == '1':
+               megauser = selfAddon.getSetting('premiumuser')
+               megapass = selfAddon.getSetting('premiumpass')
+               HideSuccessfulLogin = selfAddon.getSetting('hide-successful-premium-login-messages')
+          if megapass is not '' and megauser is not '':
+               # Browser
+               br = mechanize.Browser()
 
-                # Cookie Jar
-                cj = cookielib.LWPCookieJar()
-                br.set_cookiejar(cj)
+               # Cookie Jar
+               cj = cookielib.LWPCookieJar()
+               br.set_cookiejar(cj)
 
-                # Browser options
-                br.set_handle_equiv(True)
-                br.set_handle_gzip(True)
-                br.set_handle_redirect(True)
-                br.set_handle_referer(True)
-                br.set_handle_robots(False)
+               # Browser options
+               br.set_handle_equiv(True)
+               br.set_handle_gzip(True)
+               br.set_handle_redirect(True)
+               br.set_handle_referer(True)
+               br.set_handle_robots(False)
 
-                # Follows refresh 0 but not hangs on refresh > 0
-                br.set_handle_refresh(mechanize._http.HTTPRefreshProcessor(), max_time=1)
+               # Follows refresh 0 but not hangs on refresh > 0
+               br.set_handle_refresh(mechanize._http.HTTPRefreshProcessor(), max_time=1)
 
-                # User-Agent
-                br.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
+               # User-Agent
+               br.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
 
-                # The site we will navigate into, handling it's session
-                br.open('http://www.megaupload.com/?c=login')
+               # The site we will navigate into, handling it's session
+               br.open('http://www.megaupload.com/?c=login')
 
-                # Select the first (index zero) form
-                br.select_form('loginfrm')
+               # Select the first (index zero) form
+               br.select_form('loginfrm')
 
-                #User credentials
-                br.form['username'] = megauser
-                br.form['password'] = megapass
-                br.submit()
-                #checks if login worked
-                loginerror="Username and password do not match" in br.response().read()
-                cj.save(megacookie)
-                if loginerror == True:
-                        login = 'none'
-                        save(loginfile,login)
-                        print 'login failed'
-                        Notify('big','Megaupload','Login failed. Megaupload will load with no account.','')
-                elif loginerror == False:
-                        print 'login succeeded'
-                        if AccountType == '2':
-                                login = 'free'
-                                save(loginfile,login)
-                                if HideSuccessfulLogin == 'false':
-                                        Notify('small','Megaupload', 'Free-user login successful.','6000')
-                        elif AccountType == '1':
-                                login = 'premium'
-                                save(loginfile,login)
-                                if HideSuccessfulLogin == 'false':
-                                        Notify('small','Megaupload', 'Premium login successful.','6000')
+               #User credentials
+               br.form['username'] = megauser
+               br.form['password'] = megapass
+               br.submit()
+
+               #check if login worked
+               loginerror="Username and password do not match" in br.response().read()
+               cj.save(megacookie)
+               if loginerror == True:
+                    login = 'none'
+                    savef(loginfile,login)
+                    print 'login failed'
+                    Notify('big','Megaupload','Login failed. Megaupload will load with no account.','')
+               elif loginerror == False:
+                    print 'login succeeded'
+                    if AccountType == '2':
+                         login = 'free'
+                         savef(loginfile,login)
+                         if HideSuccessfulLogin == 'false':
+                              Notify('small','Megaupload', 'Free-user login successful.','6000')
+                    elif AccountType == '1':
+                         login = 'premium'
+                         savef(loginfile,login)
+                         if HideSuccessfulLogin == 'false':
+                              Notify('small','Megaupload', 'Premium login successful.','6000')
+          if megapass is '' or megauser is '':
+               print 'no login details specified, using no account'
+               Notify('big','Megaupload','Login failed. Megaupload will load with no account.','')
+               login = 'none'
+               savef(loginfile,login)
                                 
                                 
 
@@ -257,7 +260,7 @@ def TVCATEGORIES(url):
         setmode = '11'
         if DisableAtoZ == 'false':
                 addDir('A-Z Directories',caturl+'a-z/1',10,'')
-        if DisableAtoZ == 'true':
+        elif DisableAtoZ == 'true':
                 addDir('A-Z List',caturl+'a-z/',13,'')                
         addDir('Popular',caturl+'popular/1',setmode,'')
         addDir('Highly Rated',caturl+'rating/1',setmode,'')
@@ -269,7 +272,7 @@ def MOVIECATEGORIES(url):
         setmode = '2'
         if DisableAtoZ == 'false':
                 addDir('A-Z Directories',caturl+'a-z/1',1,'')
-        if DisableAtoZ == 'true':
+        elif DisableAtoZ == 'true':
                 addDir('A-Z List',caturl+'a-z/',3,'')
         addDir('Popular',caturl+'popular/1',setmode,'')
         addDir('Highly Rated',caturl+'rating/1',setmode,'')
@@ -706,12 +709,12 @@ def GetURL(url):
                          link=response.read()
                          response.close()
                          return link
-                if ismega is 'None':
+                elif ismega is 'None':
                         response = urllib2.urlopen(req)
                         link=response.read()
                         response.close()
                         return link
-        if login == 'none':
+        elif login == 'none':
                 response = urllib2.urlopen(req)
                 link=response.read()
                 response.close()
@@ -722,7 +725,7 @@ def VIDLINK(name,url):
 #video link preflight, pays attention to settings
         if FlattenMega == 'true':
                 VIDEOLINKS(name,url)
-        if FlattenMega == 'false':
+        elif FlattenMega == 'false':
                 addDir(name,url,110,'')
 
 def get_params():
