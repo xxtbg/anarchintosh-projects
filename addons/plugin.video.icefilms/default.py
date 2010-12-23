@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-#Icefilms.info v0.5.1 - anarchintosh 20/12/2010
+#Icefilms.info v0.5.2 - anarchintosh 20/12/2010
 # very convoluted code.
 import sys,os
 import urllib,urllib2,re,mechanize,cookielib,html2text
@@ -61,10 +61,20 @@ def savef(filename,contents):
      
 #check for megaupload login and do it
 def DoLogin():
+     try:
+          os.remove(loginfile)
+          print 'deleting loginfile'
+     except:
+          print 'loginfile does not exist'
+          
      if AccountType == '0':
           login = 'none'
           savef(loginfile,login)
-          os.remove(megacookie)
+          try:
+               os.remove(megacookie)
+               print 'deleting megacookie'
+          except:
+               print 'megacookie does not exist'
      elif AccountType == '1' or AccountType == '2':
           if AccountType == '2':
                megauser = selfAddon.getSetting('freeuser')
