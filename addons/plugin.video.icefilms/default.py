@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
-#Icefilms.info v0.6 - anarchintosh 27/12/2010
+#Icefilms.info v0.6.1 - anarchintosh 27/12/2010
 # very convoluted code.
 import sys,os
-import mechanize
+import mechanize,cStringIO
 import urllib,urllib2,re,cookielib,html2text
 import xbmc,xbmcplugin,xbmcgui,xbmcaddon,StringIO
 from BeautifulSoup import BeautifulSoup
@@ -22,15 +22,21 @@ def Notify(type,title,message,time):
           dialog = xbmcgui.Dialog()
           dialog.ok(' '+title+' ', ' '+message+' ')
 
-icepath = 'plugin://plugin.video.icefilms/'
-
-
+icepath1 = 'special://home/addons/plugin.video.icefilms'
+translatedicepath1 = xbmcpath(icepath1,'')
+icepath2 = 'special://xbmc/addons/plugin.video.icefilms'
+translatedicepath2 = xbmcpath(icepath2,'')
+if os.path.exists(translatedicepath1):
+     icepath=icepath1
+elif os.path.exists(translatedicepath2):
+     icepath=icepath2
+print 'Icepath = '+icepath
 
 
 
 icedatapath = 'special://profile/addon_data/plugin.video.icefilms'
 translatedicedatapath = xbmcpath(icedatapath,'')
-art = icepath+'resources/art/'
+art = icepath+'/resources/art'
 megacookie = xbmcpath(icedatapath,'cookies.lwp')
 print 'Cookie path: '+megacookie
 loginfile = xbmcpath(icedatapath,'Login.txt')
@@ -57,6 +63,12 @@ othery = xbmcpath(art,'other.png')
 searchy = xbmcpath(art,'search.png')
 standupy = xbmcpath(art,'standup.png')
 
+#movieimg = cStringIO.StringIO(moviesy.read())
+
+outputone = StringIO.StringIO()
+outputone.write(moviesy)
+moviey = outputone.getvalue()
+print moviey
 
 #get settings
 selfAddon = xbmcaddon.Addon(id='plugin.video.icefilms')

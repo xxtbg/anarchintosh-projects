@@ -1,3 +1,8 @@
+v0.6.1 (Monday, 27 December 2010):
+  - updated icons and fanart
+  - fixed an issue whereby the icons were not being loaded
+  - requires a fresh install of xbmc for the changes to be visible.
+
 v0.6.0 (Monday, 27 December 2010):
   - reCaptcha passthrough (enables more tv shows)
   - browse by genre for all categories
