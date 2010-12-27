@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-#Icefilms.info v0.6.1 - anarchintosh 27/12/2010
+#Icefilms.info v0.6.2 - anarchintosh 27/12/2010
 # very convoluted code.
 import sys,os
 import mechanize,cStringIO
@@ -633,93 +633,70 @@ def CATPCHAENTER(surl):
 def GETMIRRORS(url,link):
 # This scrapes the megaupload mirrors from the separate url used for the video frame.
 # It also displays them in an informative fashion to user.
-# Displays in three directory levels: HD or DVDRip, Source, PART
+# Displays in three directory levels: HD / DVDRip etc , Source, PART
 
-#old scrape all mega links code
-#        mulink=re.compile('http://www.megaupload.com/(.+?)>').findall(link)
-#        for url in mulink:
-#                fullmulink = 'http://www.megaupload.com/'+url
-#                addDir(fullmulink,fullmulink,110,'')
+     #hacky method -- save page source to file
+     save(mirrorfile, link)
 
-        #hacky method -- save page source to file
-        save(mirrorfile, link)
+     #strings for checking the existence of categories      
+     dvdrip=re.search('<div class=ripdiv><b>DVDRip / Standard Def</b>', link)
+     hd720p=re.search('<div class=ripdiv><b>HD 720p</b>', link)
+     dvdscreener=re.search('<div class=ripdiv><b>DVD Screener</b>', link)
+     r5r6=re.search('<div class=ripdiv><b>R5/R6 DVDRip</b>', link)
 
-        #strings for checking the existence of categories
-        dvdrip=re.compile('<div class=ripdiv><b>DVDRip / (.+?)</b>').findall(link)
-        hd720p=re.compile('<div class=ripdiv><b>HD (.+?)</b>').findall(link)
-        dvdscreener=re.compile('<div class=ripdiv><b>DVD Sc(.+?)</b>').findall(link)
-        r5r6=re.compile('<div class=ripdiv><b>R5/(.+?) DVDRip</b>').findall(link)
-
-        #hacky buffers
-        outputone = StringIO.StringIO()
-        outputone.write(dvdrip)
-        dvdrip = outputone.getvalue()
-
-        outputone = StringIO.StringIO()
-        outputone.write(hd720p)
-        hd720p = outputone.getvalue()
-
-        outputone = StringIO.StringIO()
-        outputone.write(dvdscreener)
-        dvdscreener = outputone.getvalue()
-
-        outputone = StringIO.StringIO()
-        outputone.write(r5r6)
-        r5r6 = outputone.getvalue()
-
-        #check that these categories exist, if they do set values to true.
-        if len(dvdrip) >3:
-                dvdrip = 'true'
-        if len(hd720p) >3:
-                hd720p = 'true'
-        if len(dvdscreener) >3:
-                dvdscreener = 'true'
-        if len(r5r6) >1:
-                r5r6 = 'true'
-        #check that these categories exist, if they dont set values to false.
-        if len(dvdrip) <1:
-                dvdrip = 'false'
-        if len(hd720p) <1:
-                hd720p = 'false'
-        if len(dvdscreener) <1:
-                dvdscreener = 'false'
-        if len(r5r6) <1:
-             r5r6 = 'false'
+     #check that these categories exist, if they do set values to true.
+     if dvdrip is not None:
+          dvdrip = 'true'
+     if hd720p is not None:
+          hd720p = 'true'
+     if dvdscreener is not None:
+          dvdscreener = 'true'
+     if r5r6 is not None:
+          r5r6 = 'true'
+     #check that these categories exist, if they dont set values to false.
+     if dvdrip is None:
+          dvdrip = 'false'
+     if hd720p is None:
+          hd720p = 'false'
+     if dvdscreener is None:
+          dvdscreener = 'false'
+     if r5r6 is None:
+          r5r6 = 'false'
              
-        #only detect and proceed directly to adding sources if flatten sources setting is true
-        if FlattenSrcType == 'true':
-                #check if there is more than one directory
-                if dvdrip == 'true' and hd720p == 'true':
-                        only1 = 'false'
-                if dvdrip == 'true' and dvdscreener == 'true':
-                        only1 = 'false'
-                if dvdrip == 'true' and r5r6 == 'true':
-                        only1 = 'false'
-                if dvdscreener == 'false' and r5r6 == 'false':
-                        only1 = 'false'
-                if hd720p == 'true' and dvdscreener == 'false':
-                        only1 = 'false'
-                if r5r6 == 'true' and hd720p == 'true':
-                        only1 = 'false'
-                #check if there is only one directory      
-                if dvdrip == 'true' and hd720p == 'false' and dvdscreener == 'false' and r5r6 == 'false':
-                        only1 = 'true'
-                        DVDRip(url)
-                if dvdrip == 'false' and hd720p == 'true' and dvdscreener == 'false' and r5r6 == 'false':
-                        only1 = 'true'
-                        HD720p(url)
-                if dvdrip == 'false' and hd720p == 'false' and dvdscreener == 'true' and r5r6 == 'false':
-                        only1 = 'true'
-                        DVDScreener(url)
-                if dvdrip == 'false' and hd720p == 'false' and dvdscreener == 'false' and r5r6 == 'true':
-                        only1 = 'true'
-                        R5R6(url)
-                #add directories of source categories if only1 is false
-                if only1 == 'false':
-                        addCatDir(url,dvdrip,hd720p,dvdscreener,r5r6)
-        #if flattensources is set to false, don't flatten                
-        if FlattenSrcType == 'false':
-                addCatDir(url,dvdrip,hd720p,dvdscreener,r5r6)     
+     #only detect and proceed directly to adding sources if flatten sources setting is true
+     if FlattenSrcType == 'true':
+          #check if there is more than one directory
+          if dvdrip == 'true' and hd720p == 'true':
+               only1 = 'false'
+          if dvdrip == 'true' and dvdscreener == 'true':
+               only1 = 'false'
+          if dvdrip == 'true' and r5r6 == 'true':
+               only1 = 'false'
+          if dvdscreener == 'false' and r5r6 == 'false':
+               only1 = 'false'
+          if hd720p == 'true' and dvdscreener == 'false':
+               only1 = 'false'
+          if r5r6 == 'true' and hd720p == 'true':
+               only1 = 'false'
+          #check if there is only one directory      
+          if dvdrip == 'true' and hd720p == 'false' and dvdscreener == 'false' and r5r6 == 'false':
+               only1 = 'true'
+               DVDRip(url)
+          if dvdrip == 'false' and hd720p == 'true' and dvdscreener == 'false' and r5r6 == 'false':
+               only1 = 'true'
+               HD720p(url)
+          if dvdrip == 'false' and hd720p == 'false' and dvdscreener == 'true' and r5r6 == 'false':
+               only1 = 'true'
+               DVDScreener(url)
+          if dvdrip == 'false' and hd720p == 'false' and dvdscreener == 'false' and r5r6 == 'true':
+               only1 = 'true'
+               R5R6(url)
+          #add directories of source categories if only1 is false
+          if only1 == 'false':
+               addCatDir(url,dvdrip,hd720p,dvdscreener,r5r6)
+     #if flattensources is set to false, don't flatten                
+     elif FlattenSrcType == 'false':
+          addCatDir(url,dvdrip,hd720p,dvdscreener,r5r6)
 
 
                 
@@ -848,7 +825,6 @@ def GetURL(url):
      #url checkers. these check for special qualities of the url
      ismega = re.search('.megaupload.com/', url)
      
-
      req = urllib2.Request(url)
      req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')       
 

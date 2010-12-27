@@ -1,3 +1,6 @@
+v0.6.2 (Monday, 27 December 2010):
+  - tidied some mirror page code. less cpu intensive
+
 v0.6.1 (Monday, 27 December 2010):
   - updated icons and fanart
   - fixed an issue whereby the icons were not being loaded
