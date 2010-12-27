@@ -1,16 +1,24 @@
-v0.5.(1,2,3) (Thursday,23 December 2010):
+v0.6.0 (Monday, 27 December 2010):
+  - reCaptcha passthrough (enables more tv shows)
+  - browse by genre for all categories
+  - HD720p category for Movies
+  - mirror pages are now only scraped once per view
+  - mechanize is now a separate addon
+  - flatten megaupload enabled by default
+
+v0.5.(1,2,3) (Thursday, 23 December 2010):
   - fixed error on first login with no account
   - fixed some bugs related to login notifications
   - tidied the login code
 
-v0.5.0 (Thursday,23 December 2010):
+v0.5.0 (Thursday, 23 December 2010):
   - search function won't return error if it cant find search
   - support for megaupload free (tested) and premium (untested)
   - notifications for logins
   - art is now loaded from disk, not scraped from photobucket
   - cookies, cookies, cookies
 
-v0.4.0 (Monday,20 December 2010):
+v0.4.0 (Monday, 20 December 2010):
   - added search function
   - added Homepage category (and option to disable)
   - removed flatten A-Z directories (avoid overloading icefilms)

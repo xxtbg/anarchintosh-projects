@@ -2,9 +2,10 @@
 <addons>
 <addon id="plugin.video.icefilms"
        name="Icefilms"
-       version="0.5.3"
+       version="0.6.0"
        provider-name="anarchintosh">
     <requires>
+        <import addon="script.module.mechanize" version="0.2.4"/>
         <import addon="xbmc.python" version="1.0"/>
     </requires>
     <extension point="xbmc.python.pluginsource"
@@ -29,5 +30,19 @@
 		<description>Download and install addons from anarchintosh repository.</description>
 		<platform>all</platform>
 	</extension>
+</addon>
+
+<addon id="script.module.mechanize"
+       name="mechanize"
+       version="0.2.4"
+       provider-name="John J. Lee">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+  </extension>
 </addon>
 </addons>

@@ -1,9 +1,10 @@
 #!/usr/bin/python
 
-#Icefilms.info v0.5.3 - anarchintosh 20/12/2010
+#Icefilms.info v0.6 - anarchintosh 27/12/2010
 # very convoluted code.
 import sys,os
-import urllib,urllib2,re,mechanize,cookielib,html2text
+import mechanize
+import urllib,urllib2,re,cookielib,html2text
 import xbmc,xbmcplugin,xbmcgui,xbmcaddon,StringIO
 from BeautifulSoup import BeautifulSoup
 
@@ -22,17 +23,31 @@ def Notify(type,title,message,time):
           dialog.ok(' '+title+' ', ' '+message+' ')
 
 icepath = 'plugin://plugin.video.icefilms/'
+
+
+
+
+
 icedatapath = 'special://profile/addon_data/plugin.video.icefilms'
 translatedicedatapath = xbmcpath(icedatapath,'')
 art = icepath+'resources/art/'
 megacookie = xbmcpath(icedatapath,'cookies.lwp')
 print 'Cookie path: '+megacookie
-loginfile = xbmcpath(icedatapath,'login.txt')
+loginfile = xbmcpath(icedatapath,'Login.txt')
+captchafile = xbmcpath(icedatapath,'CaptchaChallenge.txt')
+mirrorfile = xbmcpath(icedatapath,'MirrorPageSource.txt')
+pageurlfile = xbmcpath(icedatapath,'PageURL.txt')
+#captchafolder=icedatapath+'/captchas/'
+#transcaptchafolder = xbmcpath(captchafolder,'')
+#arty=xbmcpath(icepath+'resources/','art')
+#print arty
+#sys.path.append(arty)
 
-
-# avoid error on first run if no icedatapath exists, by creating path
+# avoid error on first run if no icedatapath exists, by creating paths
 if not os.path.exists(translatedicedatapath):
     os.makedirs(translatedicedatapath)
+#if not os.path.exists(transcaptchafolder):
+#    os.makedirs(transcaptchafolder)
 
 homepagey = xbmcpath(art,'homepage.png')
 moviesy = xbmcpath(art,'movies.png')
@@ -277,54 +292,98 @@ def CLEANSEARCH(name):
 def TVCATEGORIES(url):
         caturl = iceurl+'tv/'        
         setmode = '11'
-        if DisableAtoZ == 'false':
-                addDir('A-Z Directories',caturl+'a-z/1',10,'')
-        elif DisableAtoZ == 'true':
-                addDir('A-Z List',caturl+'a-z/',13,'')                
-        addDir('Popular',caturl+'popular/1',setmode,'')
-        addDir('Highly Rated',caturl+'rating/1',setmode,'')
-        addDir('Latest Releases',caturl+'release/1',setmode,'')
-        addDir('Recently Added',caturl+'added/1',setmode,'')
-
+        addDir('A-Z Directories',caturl+'a-z/1',10,'')            
+        ADDITIONALCATS(setmode,caturl)
+        
 def MOVIECATEGORIES(url):
         caturl = iceurl+'movies/'        
         setmode = '2'
-        if DisableAtoZ == 'false':
-                addDir('A-Z Directories',caturl+'a-z/1',1,'')
-        elif DisableAtoZ == 'true':
-                addDir('A-Z List',caturl+'a-z/',3,'')
-        addDir('Popular',caturl+'popular/1',setmode,'')
-        addDir('Highly Rated',caturl+'rating/1',setmode,'')
-        addDir('Latest Releases',caturl+'release/1',setmode,'')
-        addDir('Recently Added',caturl+'added/1',setmode,'')
-
+        addDir('A-Z Directories',caturl+'a-z/1',1,'')
+        ADDITIONALCATS(setmode,caturl)
+        
 def MUSICCATEGORIES(url):
         caturl = iceurl+'music/'        
         setmode = '2'
         addDir('A-Z List',caturl+'a-z/1',setmode,'')
-        addDir('Popular',caturl+'popular/1',setmode,'')
-        addDir('Highly Rated',caturl+'rating/1',setmode,'')
-        addDir('Latest Releases',caturl+'release/1',setmode,'')
-        addDir('Recently Added',caturl+'added/1',setmode,'')
+        ADDITIONALCATS(setmode,caturl)
+
 
 def STANDUPCATEGORIES(url):
         caturl = iceurl+'standup/'        
         setmode = '2'
         addDir('A-Z List',caturl+'a-z/1',setmode,'')
-        addDir('Popular',caturl+'popular/1',setmode,'')
-        addDir('Highly Rated',caturl+'rating/1',setmode,'')
-        addDir('Latest Releases',caturl+'release/1',setmode,'')
-        addDir('Recently Added',caturl+'added/1',setmode,'')
+        ADDITIONALCATS(setmode,caturl)
 
 def OTHERCATEGORIES(url):
         caturl = iceurl+'other/'        
         setmode = '2'
         addDir('A-Z List',caturl+'a-z/1',setmode,'')
-        addDir('Popular',caturl+'popular/1',setmode,'')
-        addDir('Highly Rated',caturl+'rating/1',setmode,'')
-        addDir('Latest Releases',caturl+'release/1',setmode,'')
-        addDir('Recently Added',caturl+'added/1',setmode,'')
+        ADDITIONALCATS(setmode,caturl)
 
+def ADDITIONALCATS(setmode,caturl):
+        if caturl == iceurl+'movies/':
+             addDir('HD 720p',caturl,63,'')
+        PopRatLat(setmode,caturl,'1')
+        addDir('Genres',caturl,64,'')
+
+def PopRatLat(modeset,caturl,genre):
+        if caturl == iceurl+'tv/':
+             setmode = '11'
+        elif caturl is not iceurl+'tv/':
+             setmode = '2'       
+        addDir('Popular',caturl+'popular/'+genre,setmode,'')
+        addDir('Highly Rated',caturl+'rating/'+genre,setmode,'')
+        addDir('Latest Releases',caturl+'release/'+genre,setmode,'')
+        addDir('Recently Added',caturl+'added/'+genre,setmode,'')
+
+def HD720pCat(url):
+        PopRatLat('2',url,'hd')
+
+def Genres(url):
+        addDir('Action',url,70,'')
+        addDir('Animation',url,71,'')
+        addDir('Comedy',url,72,'')
+        addDir('Documentary',url,73,'')
+        addDir('Drama',url,74,'')
+        addDir('Family',url,75,'')
+        addDir('Horror',url,76,'')
+        addDir('Romance',url,77,'')
+        addDir('Sci-Fi',url,78,'')
+        addDir('Thriller',url,79,'')
+      
+
+def Action(url):
+     PopRatLat('2',url,'action')
+
+def Animation(url):
+     PopRatLat('2',url,'animation')
+
+def Comedy(url):
+     PopRatLat('2',url,'comedy')
+
+def Documentary(url):
+     PopRatLat('2',url,'documentary')
+
+def Drama(url):
+     PopRatLat('2',url,'drama')
+
+def Family(url):
+     PopRatLat('2',url,'family')
+
+def Horror(url):
+     PopRatLat('2',url,'horror')
+
+def Romance(url):
+     PopRatLat('2',url,'romance')
+
+def SciFi(url):
+     PopRatLat('2',url,'sci-fi')
+
+def Thriller(url):
+     PopRatLat('2',url,'thriller')
+
+        
+     
 def MOVIEA2ZList(url):
         MOVIEINDEX(url+'1')
         MOVIEINDEX(url+'A')
@@ -490,26 +549,88 @@ def TVEPISODES(url):
                 addDir(name,iceurl+url,100,'')
                 
 def LOADMIRRORS(url):
-# This proceeds from the file page to the separate frame where the mirrors can be found,
-# then executes code to scrape the mirrors
-        link=GetURL(url)
-        match=re.compile('/membersonly/components/com_iceplayer/(.+?)" width=').findall(link)
-        match[0]=re.sub('%29',')',match[0])
-        match[0]=re.sub('%28','(',match[0])
-        for url in match:
-            mirrorpageurl = iceurl+'membersonly/components/com_iceplayer/'+url
-        GETMIRRORS(mirrorpageurl)
+     # This proceeds from the file page to the separate frame where the mirrors can be found,
+     # then executes code to scrape the mirrors
+     link=GetURL(url)
+     match=re.compile('/membersonly/components/com_iceplayer/(.+?)" width=').findall(link)
+     match[0]=re.sub('%29',')',match[0])
+     match[0]=re.sub('%28','(',match[0])
+     for url in match:
+          mirrorpageurl = iceurl+'membersonly/components/com_iceplayer/'+url
 
-def GETMIRRORS(url):
+     mlink=GetURL(mirrorpageurl)
+
+     #check for recaptcha
+     has_recaptcha = CHECKForReCAPTCHA(mlink)
+     if has_recaptcha is False:
+          GETMIRRORS(mirrorpageurl,mlink)
+     elif has_recaptcha is True:
+          RECAPTCHA(mirrorpageurl)
+        
+def CHECKForReCAPTCHA(link):
+     check = re.search('recaptcha_challenge_field', link)
+     if check is None:
+          print 'no recaptcha'
+          return False
+     elif check is not None:
+          print 'recaptcha found'
+          return True
+        
+
+def RECAPTCHA(url):
+     print 'initiating recaptcha passthrough'
+     req = urllib2.Request(url)
+     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')       
+     response = urllib2.urlopen(req)
+     link=response.read()
+     match=re.compile('<iframe src="http://www.google.com/recaptcha/api/noscript\?k\=(.+?)" height').findall(link)
+     for token in match:
+          surl = 'http://www.google.com/recaptcha/api/challenge?k=' + token
+     tokenlink=GetURL(surl)
+     matchy=re.compile("challenge : '(.+?)'").findall(tokenlink)
+     for challenge in matchy:
+          imageurl='http://www.google.com/recaptcha/api/image?c='+challenge
+
+     #hacky method --- save all captcha details and mirrorpageurl to file, to reopen in next step
+     save(captchafile, challenge)
+     save(pageurlfile, url)
+     #addDir uses imageurl as url, to avoid xbmc displaying old cached image as the fresh captcha
+     addDir('Enter Captcha - Type the letters',imageurl,99,imageurl)
+
+def CATPCHAENTER(surl):
+     url=openfile(pageurlfile)
+     kb = xbmc.Keyboard('', 'Type the letters in the captcha image', False)
+     kb.doModal()
+     if (kb.isConfirmed()):
+          userInput = kb.getText()
+          if userInput is not '':
+               challengeToken = openfile(captchafile)
+               print 'challenge token: '+challengeToken
+               parameters = urllib.urlencode({'recaptcha_challenge_field': challengeToken, 'recaptcha_response_field': userInput})
+               resp = urllib.urlopen(url, parameters)
+               link=resp.read() 
+               resp.close()
+               has_recaptcha = CHECKForReCAPTCHA(link)
+               if has_recaptcha is False:
+                    GETMIRRORS(url,link)
+               elif has_recaptcha is True:
+                    Notify('big', 'Text does not match captcha image!', 'To try again, close this box and then: \n Select the .. entry twice, or press backspace twice.', '')
+          elif userInput is '':
+               Notify('big', 'No text entered!', 'To try again, close this box and then: \n Select the .. entry twice, or press backspace twice.', '')               
+
+def GETMIRRORS(url,link):
 # This scrapes the megaupload mirrors from the separate url used for the video frame.
 # It also displays them in an informative fashion to user.
 # Displays in three directory levels: HD or DVDRip, Source, PART
-        link=GetURL(url)
+
 #old scrape all mega links code
 #        mulink=re.compile('http://www.megaupload.com/(.+?)>').findall(link)
 #        for url in mulink:
 #                fullmulink = 'http://www.megaupload.com/'+url
 #                addDir(fullmulink,fullmulink,110,'')
+
+        #hacky method -- save page source to file
+        save(mirrorfile, link)
 
         #strings for checking the existence of categories
         dvdrip=re.compile('<div class=ripdiv><b>DVDRip / (.+?)</b>').findall(link)
@@ -650,21 +771,21 @@ def SOURCE(scrape):
         PART(scrape,'16')
                 
 def DVDRip(url):
-        link=GetURL(url)
+        link=openfile(mirrorfile)
 #string for all text under standard def border
         defcat=re.compile('<div class=ripdiv><b>DVDRip / Standard Def</b>(.+?)</div>').findall(link)
         for scrape in defcat:
                 SOURCE(scrape)
 
 def HD720p(url):
-        link=GetURL(url)
+        link=openfile(mirrorfile)
 #string for all text under hd720p border
         defcat=re.compile('<div class=ripdiv><b>HD 720p</b>(.+?)</div>').findall(link)
         for scrape in defcat:
                 SOURCE(scrape)
 
 def DVDScreener(url):
-        link=GetURL(url)
+        link=openfile(mirrorfile)
 #string for all text under dvd screener border
         defcat=re.compile('<div class=ripdiv><b>DVD Screener</b>(.+?)<p></div>').findall(link)
         for scrape in defcat:
@@ -672,7 +793,7 @@ def DVDScreener(url):
                 SOURCE(catdef)
 
 def R5R6(url):
-        link=GetURL(url)
+        link=openfile(mirrorfile)
 #string for all text under r5/r6 border
         defcat=re.compile('<div class=ripdiv><b>R5/R6 DVDRip</b>(.+?)<p></div>').findall(link)
         for scrape in defcat:
@@ -712,32 +833,37 @@ def VIDEOLINKSWITHFILENAME(url):
                         addLink('VideoFile | '+urlfilename,sullurl,'')
         
 def GetURL(url):
-        login=openfile(loginfile)
-        print 'login is'+login
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')       
-        if login == 'free' or login == 'premium':
-                #load megaupload links with login cookie
-                ismega = re.search('.megaupload.com/', url)
-                if ismega is not 'None':
-                         cj = cookielib.LWPCookieJar()
-                         cooky=cj.load(megacookie)
-                         print cooky
-                         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cooky))
-                         response = opener.open(req)
-                         link=response.read()
-                         response.close()
-                         return link
-                elif ismega is 'None':
-                        response = urllib2.urlopen(req)
-                        link=response.read()
-                        response.close()
-                        return link
-        elif login == 'none':
+     #url checkers. these check for special qualities of the url
+     ismega = re.search('.megaupload.com/', url)
+     
+
+     req = urllib2.Request(url)
+     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')       
+
+     # if url is a megaupload url:
+     if ismega is not 'None':
+          login=openfile(loginfile)
+          print 'login is '+login
+          if login == 'free' or login == 'premium':
+               cj = cookielib.LWPCookieJar()
+               cooky=cj.load(megacookie)
+               print cooky
+               opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cooky))
+               response = opener.open(req)
+               link=response.read()
+               response.close()
+               return link
+          elif login == 'none':
                 response = urllib2.urlopen(req)
                 link=response.read()
                 response.close()
                 return link
+     # if url is not a megaupload url:
+     elif ismega is 'None':
+               response = urllib2.urlopen(req)
+               link=response.read()
+               response.close()
+               return link
 
 
 def VIDLINK(name,url):
@@ -847,13 +973,57 @@ elif mode==62:
         print ""+url
         WATCHINGNOW(url)
 
+elif mode==63:
+        print ""+url
+        HD720pCat(url)
+        
+elif mode==64:
+        print ""+url
+        Genres(url)
+
+elif mode==70:
+        print ""+url
+        Action(url)
+
+elif mode==71:
+        print ""+url
+        Animation(url)
+
+elif mode==72:
+        print ""+url
+        Comedy(url)
+
+elif mode==73:
+        print ""+url
+        Documentary(url)
+
+elif mode==74:
+        print ""+url
+        Drama(url)
+
+elif mode==75:
+        print ""+url
+        Family(url)
+
+elif mode==76:
+        print ""+url
+        Horror(url)
+
+elif mode==77:
+        print ""+url
+        Romance(url)
+
+elif mode==78:
+        print ""+url
+        SciFi(url)
+
+elif mode==79:
+        print ""+url
+        Thriller(url)
+    
 elif mode==1:
         print ""+url
         MOVIEA2ZDirectories(url)
-
-elif mode==3:
-        print ""+url
-        MOVIEA2ZList(url)
 
 elif mode==2:
         print ""+url
@@ -863,10 +1033,6 @@ elif mode==10:
         print ""+url
         TVA2ZDirectories(url)
 
-elif mode==13:
-        print ""+url
-        TVA2ZList(url)
-
 elif mode==11:
         print ""+url
         TVINDEX(url)
@@ -875,6 +1041,14 @@ elif mode==12:
         print ""+url
         TVEPISODES(url)
 
+elif mode==98:
+        print ""+url
+        LOADMIRRORS2(url)
+
+elif mode==99:
+        print ""+url
+        CATPCHAENTER(url)
+        
 elif mode==100:
         print ""+url
         LOADMIRRORS(url)
