@@ -1,3 +1,6 @@
+v0.6.3 (Thursday, 6 January 2010):
+  - small fix for premium users
+
 v0.6.2 (Monday, 27 December 2010):
   - tidied some mirror page code. less cpu intensive
 

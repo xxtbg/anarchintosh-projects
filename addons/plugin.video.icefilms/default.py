@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-#Icefilms.info v0.6.2 - anarchintosh 27/12/2010
+#Icefilms.info v0.6.3 - anarchintosh 27/12/2010
 # very convoluted code.
 import sys,os
 import mechanize,cStringIO
@@ -101,16 +101,18 @@ def DoLogin():
           print 'deleting loginfile'
      except:
           print 'loginfile does not exist'
+
+     try:
+          os.remove(megacookie)
+          print 'deleting megacookie'
+     except:
+          print 'megacookie does not exist'
           
      if AccountType == '0':
           login = 'none'
           save(loginfile,login)
           print 'loginfilesaved'
-          try:
-               os.remove(megacookie)
-               print 'deleting megacookie'
-          except:
-               print 'megacookie does not exist'
+          
      elif AccountType == '1' or AccountType == '2':
           if AccountType == '2':
                megauser = selfAddon.getSetting('freeuser')

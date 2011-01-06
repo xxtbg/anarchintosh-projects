@@ -2,7 +2,7 @@
 <addons>
 <addon id="plugin.video.icefilms"
        name="Icefilms"
-       version="0.6.2"
+       version="0.6.3"
        provider-name="anarchintosh">
     <requires>
         <import addon="script.module.mechanize" version="0.2.4"/>
