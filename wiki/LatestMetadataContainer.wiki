@@ -9,4 +9,4 @@ Metadata container is the .zip that contains all the default metadata for the ad
 
 == Latest Container: ==
 
-  * BEGINCONTAINER Link:http://www.megaup ReleaseNumber:0 Date:25/January/2011 ENDCONTAINER
+  * BEGINCONTAINER Link-http://www.megaup ReleaseNumber-0 Date-25/January/2011 ENDCONTAINER
