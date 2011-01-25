@@ -3,6 +3,19 @@
 
 Metadata container is the .zip that contains all the default metadata for the addon. It is automatically handled by addon, you do not need to manually download it. 
 
-To update the container, paste the new megaupload link to the .zip after Link--, increase the Releasenumber by exactly 1 digit, and set the date to your current date. 
+To update the container, paste the new megaupload link to the .zip under Link, increase the Releasenumber by exactly 1 digit, and set the date to your current date. 
 
-{{{BEGINCONTAINER Link--http://www.megaup Releasenumber--0 Date--25/January/2011 ENDCONTAINER}}}
+{{{
+BEGINCONTAINER 
+
+Link
+http://www.megaup 
+
+Releasenumber
+0
+
+Date
+25/January/2011 
+
+ENDCONTAINER
+}}}
