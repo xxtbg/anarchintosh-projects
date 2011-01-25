@@ -1,10 +1,6 @@
 #summary This wiki page is scraped by the Icefilms addon to get the latest metadata container.
 #labels metadata,container,icefilms
 
-
-
-This wiki page is scraped by the Icefilms addon through http to get the latest metadata container.
-
 Metadata container is the .zip that contains all the default metadata for the addon. It is automatically handled by addon, you do not need to manually download it.
 
 == Latest Container: ==
