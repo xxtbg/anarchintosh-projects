@@ -1,4 +1,5 @@
 #summary Where the Icefilms addon is going.
+#labels roadmap,icefilms,addon
 
 = v1.0.0 =
 Progress noted in brackets.
@@ -20,6 +21,7 @@ If you want to follow development or get involved, check out [http://forum.xbmc.
 
 * NOTE:* Video cache implementation in python is not possible. 
 Wait for [http://trac.xbmc.org/ticket/10779 this patch] to be merged into post-Dharma builds for a universal xbmc streaming cache feature to be added.      
+
 http://i.imgur.com/8rQ5h.png
 
 *Release Guide*
