@@ -8,7 +8,7 @@ Base container is smaller and focuses on being lightweight. Additional container
 To update the containers, paste the new megaupload link to the .zip under Link, increase the Releasenumber by exactly 1 digit, and set the date to your current date. Don't make mistakes or you will break the plugin's scraper.
 
 {{{
-BEGINBASECONTAINER 
+BEGIN_BASE_CONTAINER 
 
 Link
 http://www.megaup 
@@ -19,10 +19,10 @@ Releasenumber
 Date
 26/January/2011 
 
-ENDBASECONTAINER
+END_BASE_CONTAINER
 
 
-BEGINADDITIONALCONTAINER
+BEGIN_ADDITIONAL_CONTAINER
 
 Link
 http://www.megaup 
@@ -33,6 +33,6 @@ Releasenumber
 Date
 26/January/2011 
 
-ENDADDITIONALCONTAINER
+END_ADDITIONAL_CONTAINER
 
 }}}
