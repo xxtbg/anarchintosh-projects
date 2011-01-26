@@ -1,12 +1,14 @@
 #summary This wiki page is scraped by the Icefilms addon to get the latest metadata container.
 #labels metadata,container,icefilms
 
-Metadata container is the .zip that contains all the default metadata for the addon. It is automatically handled by addon, you do not need to manually download it. 
+Metadata containers are the .zip files that contains all the default metadata for the addon. It is automatically handled by addon, you do not need to manually download it. 
 
-To update the container, paste the new megaupload link to the .zip under Link, increase the Releasenumber by exactly 1 digit, and set the date to your current date. Don't make mistakes or you will break the plugin's scraper.
+Base container is smaller and focuses on being lightweight. Additional container is bigger and contains additional things like backdrops etc
+
+To update the containers, paste the new megaupload link to the .zip under Link, increase the Releasenumber by exactly 1 digit, and set the date to your current date. Don't make mistakes or you will break the plugin's scraper.
 
 {{{
-BEGINCONTAINER 
+BEGINBASECONTAINER 
 
 Link
 http://www.megaup 
@@ -15,7 +17,22 @@ Releasenumber
 0
 
 Date
-25/January/2011 
+26/January/2011 
 
-ENDCONTAINER
+ENDBASECONTAINER
+
+
+BEGINADDITIONALCONTAINER
+
+Link
+http://www.megaup 
+
+Releasenumber
+0
+
+Date
+26/January/2011 
+
+ENDADDITIONALCONTAINER
+
 }}}
