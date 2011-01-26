@@ -1,0 +1,28 @@
+#summary Where the Icefilms addon is going.
+
+= v1.0.0 =
+Progress noted in brackets.
+Will be a bit delayed, but i promise it will be good. Expect it sometime during february.
+
+ * complete Metadata support (partly done)
+ * a download limit notifier. addon will notify you if you've exceeded your megaup down limit (done)
+ * better search (done)
+ * download videofiles to folder of your choice. add to library. (partly done)
+ * favourites/starred items.
+ * some new images for sub-categories that htpc guy is preparing (done)
+ * megavid support as well as megaup
+
+
+== To Do for Future Releases ==
+If you want to follow development or get involved, check out [http://forum.xbmc.org/showthread.php?t=90315 this thread].
+ * special handling for multi part files (queues parts, treats multi part files as a video playlist)
+ * 2shared
+
+* NOTE:* Video cache implementation in python is not possible. 
+Wait for [http://trac.xbmc.org/ticket/10779 this patch] to be merged into post-Dharma builds for a universal xbmc streaming cache feature to be added.      
+http://i.imgur.com/8rQ5h.png
+
+*Release Guide*
+ * X.0.0 - Addon overhaul releases. Substantial overhaul of code or the introduction of a plethora of new features.
+ * 0.X.0 - These releases are major added features that build upon the current code.
+ * 0.0.X - Incremental releases. Usually bug-fixes or minor added features.
