@@ -1,5 +1,4 @@
 #summary Where the Icefilms addon is going.
-#labels roadmap,icefilms,addon
 
 = v1.0.0 =
 Progress noted in brackets.
