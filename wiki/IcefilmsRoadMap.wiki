@@ -11,6 +11,7 @@ Will be a bit delayed, but i promise it will be good. Expect it sometime during 
  * favourites/starred items.
  * some new images for sub-categories that htpc guy is preparing (done)
  * megavid support as well as megaup
+ * proper directories for tv show seasons
 
 
 == To Do for Future Releases ==
