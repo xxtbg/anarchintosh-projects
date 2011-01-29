@@ -1,22 +1,22 @@
-#summary Where the Icefilms addon is going.
+#summary Where the Icefilms addon is going. This page is subject to constant change.
 If you want to follow development or get involved, check out [http://forum.xbmc.org/showthread.php?t=90315 this thread].
 
 = v1.0.0 =
 Progress noted in brackets.
 Will be a bit delayed, but i promise it will be good. Expect it sometime during february.
 
- * complete Metadata support (partly done)
+ * Movie Metadata support (done)
  * a download limit notifier. addon will notify you if you've exceeded your megaup down limit (done)
  * better search (done)
  * download videofiles to folder of your choice. add to library. (partly done)
  * favourites/starred items.
  * some new images for sub-categories that htpc guy is preparing (done)
  * megavid support as well as megaup
- * proper directories for tv show seasons
+ * proper directories for tv show seasons (done)
 
 
 == To Do for Future Releases ==
-
+ * TVShow, Seasons and Episode metadata support
  * special handling for multi part files (queues parts, treats multi-part files as a video playlist)
  * 2shared
 
