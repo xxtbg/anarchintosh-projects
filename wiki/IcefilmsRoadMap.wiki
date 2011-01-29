@@ -17,7 +17,7 @@ Will be a bit delayed, but i promise it will be good. Expect it sometime during 
 
 == To Do for Future Releases ==
 
- * special handling for multi part files (queues parts, treats multi part files as a video playlist)
+ * special handling for multi part files (queues parts, treats multi-part files as a video playlist)
  * 2shared
 
 * NOTE:* Video cache implementation in python is not possible. 
