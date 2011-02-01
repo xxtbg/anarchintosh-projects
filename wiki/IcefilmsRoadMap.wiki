@@ -19,7 +19,7 @@ Will be a bit delayed, but i promise it will be good. Expect it sometime during 
  * TVShow, Seasons and Episode metadata support
  * special handling for multi part files (queues parts, treats multi-part files as a video playlist)
  * 2shared
- * megavid support as well as megaup
+ * megavid support
 
 * NOTE:* Video cache implementation in python is not possible. 
 Wait for [http://trac.xbmc.org/ticket/10779 this patch] to be merged into post-Dharma builds for a universal xbmc streaming cache feature to be added.      
