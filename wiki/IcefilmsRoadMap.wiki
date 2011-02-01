@@ -14,11 +14,16 @@ Will be a bit delayed, but i promise it will be good. Expect it sometime during 
  * some new images for sub-categories that htpc guy is preparing (done)
  * proper directories for tv show seasons (done)
 
-
-== To Do for Future Releases ==
+= v1.1.0 =
+Planned features.
+ * Library Mode - nice ways to view metadata
  * TVShow, Seasons and Episode metadata support
+ * Displaying backdrops support, + backdrops contained in metadata container.
  * Lightweight http server to serve files as a url as they are being downloaded by python (would enable pause and full video caching)
  * megavid support
+
+== To Do for Future Releases ==
+ * Youtube trailer support - links to Youtube add-on
  * special handling for multi part files (queues parts, treats multi-part files as a video playlist)
  * 2shared
 
