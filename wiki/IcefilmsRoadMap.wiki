@@ -10,7 +10,7 @@ Will be a bit delayed, but i promise it will be good. Expect it sometime during 
  * a download limit notifier. addon will notify you if you've exceeded your megaup down limit (done)
  * better search (done)
  * download videofiles to folder of your choice. add to library. (done)
- * favourites/starred items.
+ * favourites (done)
  * some new images for sub-categories that htpc guy is preparing (done)
  * proper directories for tv show seasons (done)
 
