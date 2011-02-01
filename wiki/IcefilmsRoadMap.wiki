@@ -6,7 +6,7 @@ Progress noted in brackets.
 Will be a bit delayed, but i promise it will be good. Expect it sometime during february.
 
  * Movie Metadata support (done)
- * Pre-Packaged metadata .zip container support
+ * Pre-Packaged metadata container support
  * a download limit notifier. addon will notify you if you've exceeded your megaup down limit (done)
  * better search (done)
  * download videofiles to folder of your choice. add to library. (done)
