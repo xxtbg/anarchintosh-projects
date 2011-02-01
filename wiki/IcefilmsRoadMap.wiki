@@ -17,14 +17,13 @@ Will be a bit delayed, but i promise it will be good. Expect it sometime during 
 
 == To Do for Future Releases ==
  * TVShow, Seasons and Episode metadata support
+ * Lightweight http server to serve files as a url as they are being downloaded by python (would enable pause and full video caching)
+ * megavid support
  * special handling for multi part files (queues parts, treats multi-part files as a video playlist)
  * 2shared
- * megavid support
 
-* NOTE:* Video cache implementation in python is not possible. 
-Wait for [http://trac.xbmc.org/ticket/10779 this patch] to be merged into post-Dharma builds for a universal xbmc streaming cache feature to be added.      
-
-http://i.imgur.com/8rQ5h.png
+* NOTE:* I had previously thought that [http://trac.xbmc.org/ticket/10779 this patch] would provide a universal xbmc streaming cache. 
+This is not the case. I have since been told that video cache implementation in python _is_ possible through use of a http server.
 
 *Release Guide*
  * X.0.0 - Addon overhaul releases. Substantial overhaul of code or the introduction of a plethora of new features.
