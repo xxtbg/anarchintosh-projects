@@ -2,7 +2,7 @@
 I can push out updates easily, with the user being notified in XBMC when there are new updates.
 
 = How to install the repository =
- [http://anarchintosh-projects.googlecode.com/files/repository.googlecode.anarchintosh-projects.1.0.1.zip Download the repository file zip]
+[http://anarchintosh-projects.googlecode.com/files/repository.googlecode.anarchintosh-projects.1.0.1.zip Download the repository file zip]
 
 Open XBMC
 Go to Settings > Addons > Install from zip file
