@@ -6,7 +6,7 @@ I can push out updates easily, with the user being notified in XBMC when there a
 
 Open XBMC
 Go to Settings > Addons > Install from zip file
-Browse to your downloads and select it
+Browse to your downloads and select it.
 Repository installed!
 
 Now you can install Icefilms.info from within XBMC,
