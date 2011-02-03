@@ -16,6 +16,7 @@ Will be a bit delayed, but i promise it will be good. Expect it sometime during 
 
 = v1.1.0 =
 Planned features.
+ * move menu of choice to context menu instead of big multi choice dialog
  * Library Mode - nice ways to view metadata
  * TVShow, Seasons and Episode metadata support
  * Displaying backdrops support, + backdrops contained in metadata container.
