@@ -15,7 +15,7 @@ Will be a bit delayed, but i promise it will be good. Expect it sometime during 
  * proper directories for tv show seasons (done)
 
 = v1.1.0 =
-Planned features.
+Planned features, maybe a bit ambitious.
  * move menu of choice to context menu instead of big multi choice dialog
  * Library Mode - nice ways to view metadata
  * TVShow, Seasons and Episode metadata support
