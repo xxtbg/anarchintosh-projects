@@ -1,5 +1,5 @@
 #summary Where the Icefilms addon is going. This page is subject to constant change.
-If you want to follow development or get involved, check out [http://forum.xbmc.org/showthread.php?t=90315 this thread].
+If you want to follow development or get involved, check out [http://forum.xbmc.org/showthread.php?t=90315 this thread] and the [https://github.com/icefilms-xbmc Github Development Repositories].
 
 = v1.0.0 =
 Progress noted in brackets.
