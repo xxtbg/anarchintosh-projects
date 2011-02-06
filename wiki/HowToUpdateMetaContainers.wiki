@@ -1,13 +1,7 @@
-#summary One-sentence summary of this page.
+#summary The LatestMetadataContainer wiki page is scraped by the Icefilms addon to get the latest metadata container.
 
-= Introduction =
+Metadata containers are the .zip files that contains all the default metadata for the addon. It is automatically handled by addon, you do not need to manually download it. 
 
-Add your content here.
+Base container is small and focuses on being lightweight. Additional container is bigger and contains additional things like backdrops etc
 
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+To update the containers, paste the new megaupload link to the .zip under Link, increase the Releasenumber by exactly 1 digit, and set the date to your current date. Don't make mistakes or you will break the plugin's scraper.
