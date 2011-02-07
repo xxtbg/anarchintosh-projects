@@ -6,7 +6,8 @@ Progress noted in brackets.
 Will be a bit delayed, but i promise it will be good. Expect it sometime during february.
 
  * Movie Metadata support (done)
- * Pre-Packaged metadata container support
+ * Library Mode - nice ways to view metadata (done)
+ * Pre-Packaged metadata container support (almost done)
  * a download limit notifier. addon will notify you if you've exceeded your megaup down limit (done)
  * better search (done)
  * download videofiles to folder of your choice. add to library. (done)
@@ -16,14 +17,14 @@ Will be a bit delayed, but i promise it will be good. Expect it sometime during 
 
 = v1.1.0 =
 Planned features, maybe a bit ambitious.
+ * good tidy up of the code
  * move menu of choice to context menu instead of big multi choice dialog
- * Library Mode - nice ways to view metadata
- * TVShow, Seasons and Episode metadata support
+ * TVShow, Seasons and Episode metadata support. + tv meta in metadata container.
  * Displaying backdrops support, + backdrops contained in metadata container.
  * Lightweight http server to serve files as a url as they are being downloaded by python (would enable pause and full video caching)
- * megavid support
-
+ 
 == To Do for Future Releases ==
+ * megavid support
  * Youtube trailer support - links to Youtube add-on
  * special handling for multi part files (queues parts, treats multi-part files as a video playlist)
  * 2shared
