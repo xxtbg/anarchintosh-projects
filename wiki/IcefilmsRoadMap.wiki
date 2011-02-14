@@ -4,14 +4,13 @@ If you want to follow development or get involved, check out [http://forum.xbmc.
 = v1.1.0 =
 Planned features, maybe a bit ambitious. Progress noted in brackets.
  * good tidy up of the code
- * move menu of choice to context menu instead of big multi choice dialog
+ * Youtube trailer support - links to Youtube add-on (done)
  * TVShow, Seasons and Episode metadata support. + tv meta in metadata container.
  * Displaying backdrops support, + backdrops contained in metadata container.
  * Lightweight http server to serve files as a url as they are being downloaded by python (would enable pause and full video caching)
  
 == To Do for Future Releases ==
  * megavid support
- * Youtube trailer support - links to Youtube add-on
  * special handling for multi part files (queues parts, treats multi-part files as a video playlist)
  * 2shared
 
