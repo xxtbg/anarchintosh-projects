@@ -1,4 +1,3 @@
-
 #summary Please read before asking questions
 
 =Icefilms XBMC Add-on Help=
@@ -98,6 +97,6 @@ You are able to tag a movie as a favorite via the context menu and easily find i
 = Known Bugs =
 _and workarounds_
 
-  * A script error may prevent you from viewing certain subfolders (e.g., popular, recently added, etc.) - no reason or fix has yet been identified.
+  * A script error may prevent you from viewing certain subfolders (e.g., popular, recently added, etc.) - current fix is to go to Addon Settings and deselect Enable Metadata.
   * Certain files prompt you to enter a captcha - Entering the words in the image correctly will allow to continue as normal.
   * ATV2 720p stutter - Possibly a hardware issue when streaming; however, downloading the file locally and playing may work.
