@@ -1,6 +1,7 @@
+
 #summary Please read before asking questions
 
-=Icefilms XBMC Add-On Help=
+=Icefilms XBMC Add-on Help=
 
     ==Directories== 
 _the following directories are referenced multiple times below, use them as appropriate_
@@ -55,7 +56,7 @@ Uninstall the addon using the instructions above, go to your file system and del
 _addon features_
 
     ==Context menu==
-The Icefilms addon takes advantage of the XBMC context menu feature. While in the addon, bring up the context menu by pressing the [C] key on your keyboard.
+The Icefilms addon takes advantage of the XBMC context menu feature. While in the addon, bring up the context menu by pressing the "C" key on your keyboard.
 
 The context menu features include:
   * Download - Select this option to locally save a file for offline viewing (see below for additional instructions)
@@ -63,7 +64,7 @@ The context menu features include:
   * Kill Streams - this will sever your current mega connections in an effort to  preserve your daily limit or to make streaming more efficient by cutting previously established streams
 
     ==Downloading files==
-Since version 1.0.0, you are now able to download files and store them locally for offline viewing. To set the download directory, navigate to the addon settings and click [Configure].
+Since version 1.0.0, you are now able to download files and store them locally for offline viewing. To set the download directory, navigate to the addon settings and click "Configure."
 
 There will be 3 main tabs (Menus, Megaupload, and Downloads)
 Go to the Downloads menu and set the Downloads Folder to the directory you want to store the files.
