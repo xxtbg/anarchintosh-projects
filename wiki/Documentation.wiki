@@ -1,5 +1,7 @@
 #summary Please read before asking questions
 
+<wiki:toc max_depth="3" />
+
 =Icefilms XBMC Add-on Help=
 
     ==Directories== 
