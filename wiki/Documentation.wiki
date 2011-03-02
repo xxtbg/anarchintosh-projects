@@ -1,6 +1,6 @@
 #summary Please read before asking questions
 
-<wiki:toc max_depth="3" />
+<wiki:toc max_depth="4" />
 
 =Icefilms XBMC Add-on Help=
 
@@ -94,6 +94,314 @@ Note: Metadata is currently only pulling the summary and poster for Movies. TV s
 
     ==Favourites==
 You are able to tag a movie as a favorite via the context menu and easily find it later from the home screen of the addon. The feature is not universal across platforms, each instance of the addon (separate machine) will have a unique list and is in no way associated with the favorites list from the Icefilms website.
+
+   ==Icefilms Add-on Navigation==
+_based on version 1.0.1_
+
+|| *TV Shows* || || || ||
+|| || A-Z Directories || || ||
+|| || || #1234 || ||
+|| || || A || ||
+|| || || .. || ||
+|| || || Z || ||
+|| || Popular || || ||
+|| || Highly Rated || || ||
+|| || Latest Releases || || ||
+|| || Recently Added  || || ||
+|| || Genres || || ||
+|| || || Action || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Animation || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Comedy || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Documentary || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Drama || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Family || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Horror || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Romance || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Sci-Fi || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Thriller || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| *Movies* || || || ||
+|| || A-Z Directories || || ||
+|| || || #1234 || ||
+|| || || A || ||
+|| || || .. || ||
+|| || || Z || ||
+|| || HD 720p || || ||
+|| || || Popular || ||
+|| || || Highly Rated || ||
+|| || || Latest Releases || || 
+|| || || Recently Added || ||
+|| || Popular || || ||
+|| || Highly Rated || || ||
+|| || Latest Releases || || || _see Known Bugs_
+|| || Recently Added  || || || _see Known Bugs_
+|| || Genres || || ||
+|| || || Action || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Animation || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Comedy || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Documentary || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Drama || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Family || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Horror || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Romance || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Sci-Fi || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Thriller || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| *Music* || || || ||
+|| || A-Z List || || ||
+|| || Popular || || ||
+|| || Highly Rated || || ||
+|| || Latest Releases || || ||
+|| || Recently Added  || || ||
+|| || Genres || || ||
+|| || || Action || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Animation || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Comedy || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Documentary || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Drama || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Family || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Horror || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Romance || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Sci-Fi || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Thriller || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| *Stand Up Comedy* || || || ||
+|| || A-Z List || || ||
+|| || Popular || || ||
+|| || Highly Rated || || ||
+|| || Latest Releases || || ||
+|| || Recently Added  || || ||
+|| || Genres || || ||
+|| || || Action || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Animation || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Comedy || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Documentary || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Drama || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Family || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Horror || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Romance || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Sci-Fi || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Thriller || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| *Other* || || || ||
+|| || A-Z List || || ||
+|| || Popular || || || _see Known Bugs_
+|| || Highly Rated || || || _see Known Bugs_
+|| || Latest Releases || || || _see Known Bugs_
+|| || Recently Added  || || || _see Known Bugs_
+|| || Genres || || ||
+|| || || Action || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Animation || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Comedy || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Documentary || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Drama || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Family || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Horror || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Romance || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Sci-Fi || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| || || Thriller || ||
+|| || || || Popular ||
+|| || || || Highly Rated ||
+|| || || || Latest Releases ||
+|| || || || Recently Added ||
+|| *Homepage* || || || ||
+|| || Recently Added || || ||
+|| || Latest Releases || || ||
+|| || Being Watched Now || || ||
+|| *Favourites* || || || ||
+|| *Search* || || || ||
 
 
 = Known Bugs =
