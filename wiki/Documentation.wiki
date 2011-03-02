@@ -172,8 +172,8 @@ _based on version 1.0.1_
 || || || Recently Added || ||
 || || Popular || || ||
 || || Highly Rated || || ||
-|| || Latest Releases || || || _see Known Bugs_
-|| || Recently Added  || || || _see Known Bugs_
+|| || Latest Releases || || || see Known Bugs
+|| || Recently Added  || || || see Known Bugs
 || || Genres || || ||
 || || || Action || ||
 || || || || Popular ||
@@ -341,10 +341,10 @@ _based on version 1.0.1_
 || || || || Recently Added ||
 || *Other* || || || ||
 || || A-Z List || || ||
-|| || Popular || || || _see Known Bugs_
-|| || Highly Rated || || || _see Known Bugs_
-|| || Latest Releases || || || _see Known Bugs_
-|| || Recently Added  || || || _see Known Bugs_
+|| || Popular || || || see Known Bugs
+|| || Highly Rated || || || see Known Bugs
+|| || Latest Releases || || || see Known Bugs
+|| || Recently Added  || || || see Known Bugs
 || || Genres || || ||
 || || || Action || ||
 || || || || Popular ||
