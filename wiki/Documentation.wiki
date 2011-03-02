@@ -96,7 +96,9 @@ Note: Metadata is currently only pulling the summary and poster for Movies. TV s
 You are able to tag a movie as a favorite via the context menu and easily find it later from the home screen of the addon. The feature is not universal across platforms, each instance of the addon (separate machine) will have a unique list and is in no way associated with the favorites list from the Icefilms website.
 
    ==Icefilms Add-on Navigation==
-_based on version 1.0.1_
+ _based on version 1.0.1_
+
+ _see Known Bugs for branches notated with ^@^_
 
 || *TV Shows* || || || ||
 || || A-Z Directories || || ||
@@ -172,8 +174,8 @@ _based on version 1.0.1_
 || || || Recently Added || ||
 || || Popular || || ||
 || || Highly Rated || || ||
-|| || Latest Releases || || || see Known Bugs
-|| || Recently Added  || || || see Known Bugs
+|| || Latest Releases ^@^ || || ||
+|| || Recently Added ^@^  || || ||
 || || Genres || || ||
 || || || Action || ||
 || || || || Popular ||
@@ -341,10 +343,10 @@ _based on version 1.0.1_
 || || || || Recently Added ||
 || *Other* || || || ||
 || || A-Z List || || ||
-|| || Popular || || || see Known Bugs
-|| || Highly Rated || || || see Known Bugs
-|| || Latest Releases || || || see Known Bugs
-|| || Recently Added  || || || see Known Bugs
+|| || Popular ^@^ || || ||
+|| || Highly Rated ^@^ || || ||
+|| || Latest Releases ^@^ || || ||
+|| || Recently Added ^@^  || || ||
 || || Genres || || ||
 || || || Action || ||
 || || || || Popular ||
