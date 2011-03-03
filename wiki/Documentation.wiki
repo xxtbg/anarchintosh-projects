@@ -410,5 +410,7 @@ You are able to tag a movie as a favorite via the context menu and easily find i
 _and workarounds_
 
   * A script error may prevent you from viewing certain subfolders (e.g., popular, recently added, etc.) - current fix is to go to Addon Settings and deselect Enable Metadata.
+  * A script error may prevent you from viewing specific movie sources (e.g., Black Swan and King's Speech) - no workaround.
   * Certain files prompt you to enter a captcha - Entering the words in the image correctly will allow to continue as normal.
+  * Buffering - XBMC has a limited cache. Kill streams or try other sources.
   * ATV2 720p stutter - Possibly a hardware issue when streaming; however, downloading the file locally and playing may work.
