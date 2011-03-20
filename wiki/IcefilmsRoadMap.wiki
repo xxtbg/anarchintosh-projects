@@ -3,7 +3,6 @@ If you want to follow development or get involved, check out [http://forum.xbmc.
 
 = v1.1.0 =
 Planned features, maybe a bit ambitious. Progress noted in brackets.
- * good tidy up of the code
  * TVShow, Seasons and Episode metadata support. + tv meta in metadata container. (in progress, but 95% done thanks to westcoast13)
  * Displaying backdrops support, + backdrops contained in metadata container.
  * auto-view selection - make it look nice for skins by default (done)
