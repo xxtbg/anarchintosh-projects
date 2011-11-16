@@ -34,7 +34,7 @@
 
 <addon id="plugin.download.oneddl"
        name="OneDDL.com"
-       version="0.2.0"
+       version="0.2.1"
        provider-name="pgoeri">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
@@ -54,7 +54,7 @@
 
 <addon id="plugin.download.irfree"
        name="IRFree.com"
-       version="0.2.0"
+       version="0.2.1"
        provider-name="pgoeri">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
