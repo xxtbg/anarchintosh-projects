@@ -1,9 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
+<addon id="plugin.download.irfree"
+       name="IRFree.com"
+       version="0.2.2"
+       provider-name="pgoeri">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="plugin.program.jdownloader" version="1.0.2"/>
+    <import addon="script.module.ddlscraper" version="0.1.1"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+             library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Browse releases on IRFree.com and add links to JDownloader</summary>
+    <description lang="en">This plugin scrapes posts from IRFree.com and presents them as directory items. By selecting a post the link gets added to JDownloader.</description>
+  </extension>
+</addon>
+
+<addon id="plugin.download.oneddl"
+       name="OneDDL.com"
+       version="0.2.3"
+       provider-name="pgoeri">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="plugin.program.jdownloader" version="1.0.2"/>
+    <import addon="script.module.ddlscraper" version="0.1.1"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+             library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Browse releases on OneDDL.com and add links to JDownloader</summary>
+    <description lang="en">This plugin scrapes posts from OneDDL.com and presents them as directory items. By selecting a post the link gets added to JDownloader.</description>
+  </extension>
+</addon>
+
 <addon id="plugin.video.icefilms"
        name="Icefilms"
-       version="1.1.5"
-       provider-name="anarchintosh,daledude,eldorado">
+       version="1.1.6"
+       provider-name="Eldorado (originator: anarchintosh)">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
         <import addon="script.module.simplejson"/>
@@ -39,43 +79,19 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
 	</extension>
 </addon>
 
-<addon id="plugin.download.oneddl"
-       name="OneDDL.com"
-       version="0.2.3"
+<addon id="script.module.ddlscraper"
+       name="DDLScraper"
+       version="0.1.1"
        provider-name="pgoeri">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
-    <import addon="plugin.program.jdownloader" version="1.0.2"/>
-    <import addon="script.module.ddlscraper" version="0.1.1"/>
   </requires>
-  <extension point="xbmc.python.pluginsource"
-             library="default.py">
-    <provides>executable</provides>
-  </extension>
+  <extension point="xbmc.python.module"
+             library="lib" />
   <extension point="xbmc.addon.metadata">
+    <summary lang="en">A library for "plugin.download." add-ons</summary>
+    <description lang="en">This library provides base classes for presenting a posts from a web site and extract links from a specific post.</description>
     <platform>all</platform>
-    <summary lang="en">Browse releases on OneDDL.com and add links to JDownloader</summary>
-    <description lang="en">This plugin scrapes posts from OneDDL.com and presents them as directory items. By selecting a post the link gets added to JDownloader.</description>
-  </extension>
-</addon>
-
-<addon id="plugin.download.irfree"
-       name="IRFree.com"
-       version="0.2.2"
-       provider-name="pgoeri">
-  <requires>
-    <import addon="xbmc.python" version="1.0"/>
-    <import addon="plugin.program.jdownloader" version="1.0.2"/>
-    <import addon="script.module.ddlscraper" version="0.1.1"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-             library="default.py">
-    <provides>executable</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary lang="en">Browse releases on IRFree.com and add links to JDownloader</summary>
-    <description lang="en">This plugin scrapes posts from IRFree.com and presents them as directory items. By selecting a post the link gets added to JDownloader.</description>
   </extension>
 </addon>
 
@@ -89,22 +105,6 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
   <extension point="xbmc.python.module"
              library="lib" />
   <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="script.module.ddlscraper"
-       name="DDLScraper"
-       version="0.1.1"
-       provider-name="pgoeri">
-  <requires>
-    <import addon="xbmc.python" version="1.0"/>
-  </requires>
-  <extension point="xbmc.python.module"
-             library="lib" />
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">A library for "plugin.download." add-ons</summary>
-    <description lang="en">This library provides base classes for presenting a posts from a web site and extract links from a specific post.</description>
     <platform>all</platform>
   </extension>
 </addon>
