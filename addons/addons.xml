@@ -113,7 +113,7 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
 
 <addon id="plugin.download.rlsbb"
        name="RlsBB.me"
-       version="0.1.0"
+       version="0.1.1"
        provider-name="pgoeri">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
