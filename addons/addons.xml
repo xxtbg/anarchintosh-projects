@@ -96,11 +96,11 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
 
 <addon id="script.module.ddlscraper"
        name="DDLScraper"
-       version="0.1.2"
+       version="0.1.3"
        provider-name="pgoeri">
   <requires>
-    <import addon="xbmc.python" version="1.0"/>
-    <import addon="plugin.program.jdownloader" version="1.3.0"/>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="plugin.program.jdownloader" version="1.3.1"/>
     <import addon="script.module.mechanize" version="0.2.5"/>
   </requires>
   <extension point="xbmc.python.module"
@@ -109,25 +109,37 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <summary lang="en">A library for "plugin.download." add-ons</summary>
     <description lang="en">This library provides base classes for presenting a posts from a web site and extract links from a specific post.</description>
     <platform>all</platform>
+    <language></language>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+    <forum></forum>
+    <website>http://pgoeri-xbmc-plugins.googlecode.com/</website>
+    <source>http://pgoeri-xbmc-plugins.googlecode.com/svn/trunk/script.module.ddlscraper/</source>
+    <email> pgoeri85 at gmail dot com</email>
   </extension>
 </addon>
 
 <addon id="plugin.download.rlsbb"
        name="RlsBB.com"
-       version="0.1.2"
+       version="0.1.3"
        provider-name="pgoeri">
   <requires>
-    <import addon="xbmc.python" version="1.0"/>
-    <import addon="script.module.ddlscraper" version="0.1.2"/>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.ddlscraper" version="0.1.3"/>
   </requires>
   <extension point="xbmc.python.pluginsource"
              library="default.py">
     <provides>executable</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
     <summary lang="en">Browse releases on rlsbb.com and add links to JDownloader</summary>
     <description lang="en">This plugin scrapes posts from rlsbb.com and presents them as directory items. By selecting a post the link gets added to JDownloader.</description>
+    <platform>all</platform>
+    <language>en</language>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+    <forum>http://forum.xbmc.org/showthread.php?tid=134983</forum>
+    <website>http://pgoeri-xbmc-plugins.googlecode.com/</website>
+    <source>http://pgoeri-xbmc-plugins.googlecode.com/svn/trunk/plugin.download.rlsbb/</source>
+    <email> pgoeri85 at gmail dot com</email>
   </extension>
 </addon>
 </addons>
