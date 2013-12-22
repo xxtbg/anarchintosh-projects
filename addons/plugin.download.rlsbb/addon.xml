@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.download.rlsbb"
        name="RlsBB.com"
-       version="0.1.2"
+       version="0.1.3"
        provider-name="pgoeri">
   <requires>
-    <import addon="xbmc.python" version="1.0"/>
-    <import addon="script.module.ddlscraper" version="0.1.2"/>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.ddlscraper" version="0.1.3"/>
   </requires>
   <extension point="xbmc.python.pluginsource"
              library="default.py">
     <provides>executable</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
     <summary lang="en">Browse releases on rlsbb.com and add links to JDownloader</summary>
     <description lang="en">This plugin scrapes posts from rlsbb.com and presents them as directory items. By selecting a post the link gets added to JDownloader.</description>
+    <platform>all</platform>
+    <language>en</language>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+    <forum>http://forum.xbmc.org/showthread.php?tid=134983</forum>
+    <website>http://pgoeri-xbmc-plugins.googlecode.com/</website>
+    <source>http://pgoeri-xbmc-plugins.googlecode.com/svn/trunk/plugin.download.rlsbb/</source>
+    <email> pgoeri85 at gmail dot com</email>
   </extension>
 </addon>
