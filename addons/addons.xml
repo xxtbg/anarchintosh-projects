@@ -78,7 +78,7 @@
         <import addon="script.module.metahandler" version="2.5.1" />
         <import addon="script.module.addon.common" version="2.0.0" />
         <import addon="script.module.axel.downloader" version="0.1.0" />
-        <import addon="script.common.plugin.cache" "/>
+        <import addon="script.common.plugin.cache" />
     </requires>
     <extension point="xbmc.python.pluginsource"
                library="default.py">
